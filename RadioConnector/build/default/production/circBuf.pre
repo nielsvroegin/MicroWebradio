@@ -1,0 +1,51 @@
+
+# 1 "circBuf.c"
+
+# 5 "circBuf.h"
+typedef volatile struct
+{
+unsigned char * const buffer;
+unsigned char head;
+unsigned char tail;
+const unsigned char maxLen;
+} circBuf_t;
+
+
+bit circBufPush(circBuf_t *c, unsigned char data);
+
+
+bit circBufPop(circBuf_t *c, unsigned char *data);
+
+# 5 "circBuf.c"
+bit circBufPush(circBuf_t *c, unsigned char data)
+{
+unsigned char next = c->head + 1;
+if (next >= c->maxLen)
+next = 0;
+
+
+if (next == c->tail)
+return 0;
+
+c->buffer[c->head] = data;
+c->head = next;
+return 1;
+}
+
+bit circBufPop(circBuf_t *c, unsigned char *data)
+{
+
+if (c->head == c->tail)
+return 0;
+
+*data = c->buffer[c->tail];
+c->buffer[c->tail] = 0;
+
+unsigned char next = c->tail + 1;
+if(next >= c->maxLen)
+next = 0;
+
+c->tail = next;
+
+return 1;
+}
