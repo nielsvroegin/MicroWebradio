@@ -4123,6 +4123,9 @@ bit esp8266_restart(void);
 bit esp8266_listAp(void);
 
 
+bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
+
+
 
 static void processAccessPointLine(unsigned char *line);
 
@@ -4198,7 +4201,7 @@ static unsigned char getch(void);
 
 void interrupt ISR(void)
 {
-if(RCIF) {
+if(RCIF && RCIE) {
 
 if(OERR) {
 
@@ -4229,6 +4232,10 @@ while(!esp8266_isOnline());
 
 
 esp8266_listAp();
+
+
+static bit res;
+res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
 
 
 LATAbits.LATA0 = 1;

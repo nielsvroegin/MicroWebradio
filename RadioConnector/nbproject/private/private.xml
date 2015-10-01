@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Niels/MPLABXProjects/RadioConnector.X/main.c</file>
-            <file>file:/C:/Users/Niels/MPLABXProjects/RadioConnector.X/esp8266.c</file>
-            <file>file:/C:/Users/Niels/MPLABXProjects/RadioConnector.X/circBuf.c</file>
-            <file>file:/C:/Users/Niels/MPLABXProjects/RadioConnector.X/circBuf.h</file>
-            <file>file:/C:/Users/Niels/MPLABXProjects/RadioConnector.X/main.h</file>
-            <file>file:/C:/Users/Niels/MPLABXProjects/RadioConnector.X/esp8266.h</file>
+            <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/main.c</file>
+            <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/esp8266.h</file>
+            <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/esp8266.c</file>
+            <file>file:/C:/Program%20Files%20(x86)/Microchip/xc8/v1.35/sources/common/strcpy.c</file>
         </group>
     </open-files>
 </project-private>

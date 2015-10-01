@@ -65,7 +65,7 @@
 
 void interrupt ISR(void)
 {
-    if(RCIF) {
+    if(RCIF && RCIE) {
         // Overrun error bit        
         if(OERR) {     
             // Restart USART
@@ -95,7 +95,11 @@ void main(void) {
     while(!esp8266_isOnline());
     
     // List APs
-    esp8266_listAp();    
+    esp8266_listAp();
+
+    // Join AP
+    static bit res;
+    res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
     
     // LED ON
     LATAbits.LATA0 = 1;

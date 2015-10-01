@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\RadioConnector.X.production.hex">
+  <executable name="dist/default/production\RadioConnector.production.hex">
     <memory name="program">
       <units>bytes</units>
       <length>32768</length>
-      <used>2895</used>
-      <free>29873</free>
+      <used>3205</used>
+      <free>29563</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>1536</length>
-      <used>485</used>
-      <free>1051</free>
+      <used>554</used>
+      <free>982</free>
     </memory>
   </executable>
 </project>

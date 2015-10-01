@@ -1,6 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
 "8073 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [v _RCIF `Vb ~T0 @X0 0 e@31989 ]
+"8071
+[v _RCIE `Vb ~T0 @X0 0 e@31981 ]
 "7873
 [v _OERR `Vb ~T0 @X0 0 e@32089 ]
 "7465
@@ -50,6 +52,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _esp8266_isOnline `(b ~T0 @X0 0 ef ]
 "26
 [v _esp8266_listAp `(b ~T0 @X0 0 ef ]
+"29
+[v _esp8266_joinAp `(b ~T0 @X0 0 ef2`*Cuc`*Cuc ]
 "1741 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [s S110 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S110 . TRISA0 TRISA1 TRISA2 TRISA3 TRISA4 TRISA5 TRISA6 TRISA7 ]
@@ -3179,12 +3183,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;esp8266.h: 20: bit esp8266_isOnline(void);
 [; ;esp8266.h: 23: bit esp8266_restart(void);
 [; ;esp8266.h: 26: bit esp8266_listAp(void);
-[; ;esp8266.h: 30: static void processAccessPointLine(unsigned char *line);
-[; ;esp8266.h: 35: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor);
-[; ;esp8266.h: 38: static void writeLine(unsigned const char *line);
-[; ;esp8266.h: 41: static void readLine(unsigned char line[50]);
-[; ;esp8266.h: 44: static void putch(unsigned char);
-[; ;esp8266.h: 47: static unsigned char getch(void);
+[; ;esp8266.h: 29: bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
+[; ;esp8266.h: 33: static void processAccessPointLine(unsigned char *line);
+[; ;esp8266.h: 38: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor);
+[; ;esp8266.h: 41: static void writeLine(unsigned const char *line);
+[; ;esp8266.h: 44: static void readLine(unsigned char line[50]);
+[; ;esp8266.h: 47: static void putch(unsigned char);
+[; ;esp8266.h: 50: static unsigned char getch(void);
 "15 main.c
 [p x OSC=HS ]
 "16
@@ -3249,18 +3254,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR2=OFF ]
 "64
 [p x EBTR3=OFF ]
-[v F3362 `(v ~T0 @X0 1 tf ]
+[v F3365 `(v ~T0 @X0 1 tf ]
 "66
-[v _ISR `IF3362 ~T0 @X0 1 e ]
+[v _ISR `IF3365 ~T0 @X0 1 e ]
 "67
 {
 [; ;main.c: 66: void interrupt ISR(void)
 [; ;main.c: 67: {
 [e :U _ISR ]
 [f ]
-[; ;main.c: 68: if(RCIF) {
+[; ;main.c: 68: if(RCIF && RCIE) {
 "68
-[e $ ! _RCIF 368  ]
+[e $ ! && _RCIF _RCIE 368  ]
 {
 [; ;main.c: 70: if(OERR) {
 "70
@@ -3328,70 +3333,78 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 98: esp8266_listAp();
 "98
 [e ( _esp8266_listAp ..  ]
-[; ;main.c: 101: LATAbits.LATA0 = 1;
 "101
+[v F3367 `b ~T0 @X0 1 s res ]
+[; ;main.c: 101: static bit res;
+[; ;main.c: 102: res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
+"102
+[e = F3367 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
+[; ;main.c: 105: LATAbits.LATA0 = 1;
+"105
 [e = . . _LATAbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 103: while(1);
-"103
+[; ;main.c: 107: while(1);
+"107
 [e :U 377 ]
 [e :U 376 ]
 [e $U 377  ]
 [e :U 378 ]
-[; ;main.c: 104: return;
-"104
+[; ;main.c: 108: return;
+"108
 [e $UE 372  ]
-[; ;main.c: 105: }
-"105
+[; ;main.c: 109: }
+"109
 [e :UE 372 ]
 }
-"107
+"111
 [v _setup `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 107: void setup(void) {
+[; ;main.c: 111: void setup(void) {
 [e :U _setup ]
 [f ]
-[; ;main.c: 109: TRISAbits.TRISA0 = 0;
-"109
-[e = . . _TRISAbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 112: GIE = 1;
-"112
-[e = _GIE -> -> 1 `i `b ]
-[; ;main.c: 113: PEIE = 1;
+[; ;main.c: 113: TRISAbits.TRISA0 = 0;
 "113
-[e = _PEIE -> -> 1 `i `b ]
-[; ;main.c: 116: msdelay(1000);
+[e = . . _TRISAbits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 116: GIE = 1;
 "116
-[e ( _msdelay (1 -> -> 1000 `i `ui ]
-[; ;main.c: 119: esp8266_init();
-"119
-[e ( _esp8266_init ..  ]
-[; ;main.c: 120: }
+[e = _GIE -> -> 1 `i `b ]
+[; ;main.c: 117: PEIE = 1;
+"117
+[e = _PEIE -> -> 1 `i `b ]
+[; ;main.c: 120: msdelay(1000);
 "120
+[e ( _msdelay (1 -> -> 1000 `i `ui ]
+[; ;main.c: 123: esp8266_init();
+"123
+[e ( _esp8266_init ..  ]
+[; ;main.c: 124: }
+"124
 [e :UE 379 ]
 }
-"122
+"126
 [v _msdelay `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;main.c: 122: void msdelay(unsigned int b) {
+[; ;main.c: 126: void msdelay(unsigned int b) {
 [e :U _msdelay ]
 [v _b `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 123: do {
-"123
+[; ;main.c: 127: do {
+"127
 [e :U 383 ]
 {
-[; ;main.c: 124: b--;
-"124
+[; ;main.c: 128: b--;
+"128
 [e -- _b -> -> 1 `i `ui ]
-[; ;main.c: 125: _delay((unsigned long)((1)*(20000000/4000.0)));
-"125
+[; ;main.c: 129: _delay((unsigned long)((1)*(20000000/4000.0)));
+"129
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
-"126
+"130
 }
-[; ;main.c: 126: } while(b);
+[; ;main.c: 130: } while(b);
 [e $ != _b -> -> 0 `i `ui 383  ]
 [e :U 382 ]
-[; ;main.c: 127: }
-"127
+[; ;main.c: 131: }
+"131
 [e :UE 380 ]
 }
+[a 2C 67 72 78 65 74 82 68 81 0 ]
+[a 1C 85 80 67 49 50 52 56 48 50 51 0 ]

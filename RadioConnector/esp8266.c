@@ -7,6 +7,8 @@
 //------------- Global Vars -------------//
 CIRCBUF_DEF(receiveBuffer, 32);
 
+static unsigned char command[64];
+
 static unsigned char amountOfAccessPoints;
 static struct AccessPoint accessPoints[10];
 
@@ -47,19 +49,12 @@ void esp8266_fillBuffer(unsigned char c) {
 
 // Check if the module is started
 bit esp8266_isOnline(void) {
-    performCommand("AT", NULL);      
-    return 1;
+    return performCommand("AT", NULL);          
 }
 
 // Restart module
 bit esp8266_restart(void) {
-    //_esp8266_print("AT+RST\r\n");
-    //if (_esp8266_waitResponse() != ESP8266_OK) {
-    //    return false;
-   // }
-    //return (_esp8266_waitResponse() == ESP8266_READY);
-    
-    return 0;
+    return performCommand("AT+RST", NULL);
 }
 
 // List Access Points
@@ -71,6 +66,16 @@ bit esp8266_listAp(void) {
     return performCommand("AT+CWLAP", processAccessPointLine);    
 }
 
+// Join Access Point
+bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password) {
+    strcpy(command, "AT+CWJAP=\"");    
+    strcat(command, ssid);
+    strcat(command, "\",\"");
+    strcat(command, password);
+    strcat(command, "\"");
+    
+    return performCommand(command, NULL);
+}
 //------------- Static Processor Functions -------------//
 
 static void processAccessPointLine(unsigned char *line){
@@ -110,6 +115,8 @@ static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor)
         if(strcmp(line, "OK") == 0) {
             return 1;
         } else if(strcmp(line, "ERROR") == 0) {
+            return 0;
+        } else if(strcmp(line, "FAIL") == 0) {
             return 0;
         } else {
             // Collect other lines
