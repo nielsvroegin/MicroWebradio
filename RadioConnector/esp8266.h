@@ -28,6 +28,9 @@ bit esp8266_listAp(void);
 // Join Access Point
 bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
 
+// Quit Access Point
+bit esp8266_quitAp(void);
+
 //------------- Static Processor Functions -------------//
 
 static void processAccessPointLine(unsigned char *line);

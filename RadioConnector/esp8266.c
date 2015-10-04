@@ -76,6 +76,11 @@ bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password) {
     
     return performCommand(command, NULL);
 }
+
+// Restart module
+bit esp8266_quitAp(void) {
+    return performCommand("AT+CWQAP", NULL);
+}
 //------------- Static Processor Functions -------------//
 
 static void processAccessPointLine(unsigned char *line){

@@ -96,10 +96,12 @@ void main(void) {
     
     // List APs
     esp8266_listAp();
-
+    
     // Join AP
     static bit res;
     res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
+   
+    res = esp8266_quitAp();
     
     // LED ON
     LATAbits.LATA0 = 1;
