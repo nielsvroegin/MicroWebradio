@@ -4,7 +4,7 @@
 void spiManager_init(void);
 
 // Process received byte
-void spiManager_receivedByte();
+inline void spiManager_receivedByte();
 
 // Process data of buffer
 void spiManager_processData();

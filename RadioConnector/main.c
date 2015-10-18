@@ -127,14 +127,14 @@ void setup(void) {
     GIE  = 1; // Enable global interrupts
     PEIE = 1; // Enable pheripheral interrupts
     
+    // Initialize SPI Manager
+    spiManager_init();
+    
     // Wait for ESP8266 to start up
     msdelay(1000);
     
     // Initialize ESP8266
     esp8266_init();
-    
-    // Initialize SPI Manager
-    spiManager_init();
 }
 
 void msdelay(unsigned int b) {

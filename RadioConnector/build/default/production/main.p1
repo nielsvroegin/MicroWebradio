@@ -17,8 +17,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _SSPIF `Vb ~T0 @X0 0 e@31987 ]
 "8193
 [v _SSPIE `Vb ~T0 @X0 0 e@31979 ]
+[v F4143 `(v ~T0 @X0 1 tf ]
 "7 spiManager.h
-[v _spiManager_receivedByte `(v ~T0 @X0 0 ef ]
+[v _spiManager_receivedByte `TF4143 ~T0 @X0 0 e ]
 [p mainexit ]
 "6 main.h
 [v _setup `(v ~T0 @X0 0 ef ]
@@ -79,12 +80,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _GIE `Vb ~T0 @X0 0 e@32663 ]
 "7947
 [v _PEIE `Vb ~T0 @X0 0 e@32662 ]
+"4 spiManager.h
+[v _spiManager_init `(v ~T0 @X0 0 ef ]
 "9 main.h
 [v _msdelay `(v ~T0 @X0 0 ef1`ui ]
 "14 esp8266.h
 [v _esp8266_init `(v ~T0 @X0 0 ef ]
-"4 spiManager.h
-[v _spiManager_init `(v ~T0 @X0 0 ef ]
 [v F4098 `(v ~T0 @X0 1 tf1`ul ]
 "152 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18.h
 [v __delay `JF4098 ~T0 @X0 0 e ]
@@ -3821,7 +3822,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;esp8266.h: 50: static void putch(unsigned char);
 [; ;esp8266.h: 53: static unsigned char getch(void);
 [; ;spiManager.h: 4: void spiManager_init(void);
-[; ;spiManager.h: 7: void spiManager_receivedByte();
+[; ;spiManager.h: 7: inline void spiManager_receivedByte();
 [; ;spiManager.h: 10: void spiManager_processData();
 [; ;spiManager.h: 14: static void handleMessage(unsigned char messageType);
 [; ;spiManager.h: 18: static void keepAlive(unsigned char messageSize);
@@ -3889,9 +3890,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR2=OFF ]
 "65
 [p x EBTR3=OFF ]
-[v F4150 `(v ~T0 @X0 1 tf ]
+[v F4151 `(v ~T0 @X0 1 tf ]
 "67
-[v _ISR `IF4150 ~T0 @X0 1 e ]
+[v _ISR `IF4151 ~T0 @X0 1 e ]
 "68
 {
 [; ;main.c: 67: void interrupt ISR(void)
@@ -3977,14 +3978,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 "102
 [e ( _esp8266_listAp ..  ]
 "105
-[v F4152 `b ~T0 @X0 1 s res ]
+[v F4153 `b ~T0 @X0 1 s res ]
 [; ;main.c: 105: static bit res;
 [; ;main.c: 106: res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
 "106
-[e = F4152 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
+[e = F4153 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
 [; ;main.c: 108: res = esp8266_quitAp();
 "108
-[e = F4152 ( _esp8266_quitAp ..  ]
+[e = F4153 ( _esp8266_quitAp ..  ]
 [; ;main.c: 111: LATAbits.LATA0 = 1;
 "111
 [e = . . _LATAbits 0 0 -> -> 1 `i `uc ]
@@ -4027,15 +4028,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 128: PEIE = 1;
 "128
 [e = _PEIE -> -> 1 `i `b ]
-[; ;main.c: 131: msdelay(1000);
+[; ;main.c: 131: spiManager_init();
 "131
-[e ( _msdelay (1 -> -> 1000 `i `ui ]
-[; ;main.c: 134: esp8266_init();
-"134
-[e ( _esp8266_init ..  ]
-[; ;main.c: 137: spiManager_init();
-"137
 [e ( _spiManager_init ..  ]
+[; ;main.c: 134: msdelay(1000);
+"134
+[e ( _msdelay (1 -> -> 1000 `i `ui ]
+[; ;main.c: 137: esp8266_init();
+"137
+[e ( _esp8266_init ..  ]
 [; ;main.c: 138: }
 "138
 [e :UE 415 ]

@@ -10,26 +10,45 @@
 
 //------------- Global Vars -------------//
 CIRCBUF_DEF(receiveBuffer, 32);
+CIRCBUF_DEF(sendBuffer, 32);
+
+unsigned char nextByte;
 
 //------------- Public Functions -------------//
 
 // Initialize SPI Manager
 void spiManager_init(void) {
+    // Configure pin to trigger interrupt at master
+    TRISAbits.TRISA1 = 0; // Master Interrupt trigger as output
+    LATAbits.LATA1 = 1; // Set High, as interrupt will be trigger by low
+    
     // Close when SPI was already open
     CloseSPI();
     
     // Open SPI as slave
     OpenSPI(SLV_SSON, MODE_01, SMPEND);
     
+    // Set buffer to 0
+    SSPBUF = 0x00;
+    nextByte = 0x00;
+    
     // Enable interrupts
     EnableIntSPI;
 }
 
 // Process received byte
-void spiManager_receivedByte() {
-    unsigned char c = SSPBUF;
+inline void spiManager_receivedByte() {
+    // Read char from buffer
+    unsigned char readByte = SSPBUF;
+    SSPBUF = nextByte;
     
-    circBufPush(&receiveBuffer, c);
+    // Load next byte from send buffer
+    if(!circBufPop(&sendBuffer, &nextByte)) {        
+        nextByte = 0x00;
+    }
+    
+    // Add read byte to buffer
+    circBufPush(&receiveBuffer, readByte);
     
     SPI_Clear_Intr_Status_Bit;
 }
@@ -81,6 +100,23 @@ static void keepAlive(unsigned char messageSize) {
     keepAliveMessage[messageSize] = '\0';
     
     // Send alive string to master
-    //unsigned char message[6] = "ALIVE";
-    //putsSPI(message);    
+    circBufPush(&sendBuffer, 1);
+    circBufPush(&sendBuffer, 12);
+    circBufPush(&sendBuffer, 'S');
+    circBufPush(&sendBuffer, 'l');
+    circBufPush(&sendBuffer, 'a');
+    circBufPush(&sendBuffer, 'v');
+    circBufPush(&sendBuffer, 'e');
+    circBufPush(&sendBuffer, ' ');
+    circBufPush(&sendBuffer, 'A');
+    circBufPush(&sendBuffer, 'l');
+    circBufPush(&sendBuffer, 'i');
+    circBufPush(&sendBuffer, 'v');
+    circBufPush(&sendBuffer, 'e');
+    circBufPush(&sendBuffer, '\0');
+    
+    // Trigger interrupt at master
+    LATAbits.LATA1 = 0;
+    LATAbits.LATA1 = 1;
 }
+

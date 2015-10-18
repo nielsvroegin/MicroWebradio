@@ -5,7 +5,6 @@
         <group>
             <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/main.c</file>
             <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/spiManager.h</file>
-            <file>file:/C:/Program%20Files%20(x86)/Microchip/xc8/v1.35/sources/pic18/plib/SPI/spi_puts.c</file>
             <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/esp8266.c</file>
             <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/circBuf.c</file>
             <file>file:/C:/Users/Niels/MPLABXProjects/MicroWebRadio/RadioConnector/spiManager.c</file>

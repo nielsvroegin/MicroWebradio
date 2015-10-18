@@ -5015,7 +5015,7 @@ static unsigned char getch(void);
 void spiManager_init(void);
 
 
-void spiManager_receivedByte();
+inline void spiManager_receivedByte();
 
 
 void spiManager_processData();
@@ -5145,13 +5145,13 @@ GIE = 1;
 PEIE = 1;
 
 
+spiManager_init();
+
+
 msdelay(1000);
 
 
 esp8266_init();
-
-
-spiManager_init();
 }
 
 void msdelay(unsigned int b) {
