@@ -7,6 +7,7 @@
       <itemPath>esp8266.h</itemPath>
       <itemPath>main.h</itemPath>
       <itemPath>circBuf.h</itemPath>
+      <itemPath>spiManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -18,6 +19,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>esp8266.c</itemPath>
       <itemPath>circBuf.c</itemPath>
+      <itemPath>spiManager.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -117,7 +119,7 @@
         <property key="initialize-data" value="true"/>
         <property key="keep-generated-startup.as" value="false"/>
         <property key="link-in-c-library" value="true"/>
-        <property key="link-in-peripheral-library" value="false"/>
+        <property key="link-in-peripheral-library" value="true"/>
         <property key="managed-stack" value="false"/>
         <property key="opt-xc8-linker-file" value="false"/>
         <property key="opt-xc8-linker-link_startup" value="false"/>

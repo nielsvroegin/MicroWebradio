@@ -10,6 +10,7 @@
 #include "main.h"
 #include <xc.h>
 #include "esp8266.h"
+#include "spiManager.h"
 
 // CONFIG1H
 #pragma config OSC = HS         // Oscillator Selection bits (HS oscillator)
@@ -65,6 +66,7 @@
 
 void interrupt ISR(void)
 {
+    // Handle UART interrupt
     if(RCIF && RCIE) {
         // Overrun error bit        
         if(OERR) {     
@@ -82,14 +84,16 @@ void interrupt ISR(void)
             esp8266_fillBuffer(RCREG);
         }
     }
+    
+    // Handle SPI interrupt
+    if(SSPIF && SSPIE) {
+        spiManager_receivedByte();
+    }
 }
 
 void main(void) {
     // Perform setup
     setup();
-    
-    // LED OFF
-    LATAbits.LATA0 = 0;
     
     // Check if ESP8266 is started
     while(!esp8266_isOnline());
@@ -106,13 +110,18 @@ void main(void) {
     // LED ON
     LATAbits.LATA0 = 1;
     
-    while(1);
+    while(1) {        
+        spiManager_processData();
+    }
     return;
 }
 
 void setup(void) {
     // Configure IO    
     TRISAbits.TRISA0 = 0; // Led output
+    
+    // LED OFF
+    LATAbits.LATA0 = 0;
     
     // Configure interrupts
     GIE  = 1; // Enable global interrupts
@@ -123,6 +132,9 @@ void setup(void) {
     
     // Initialize ESP8266
     esp8266_init();
+    
+    // Initialize SPI Manager
+    spiManager_init();
 }
 
 void msdelay(unsigned int b) {
