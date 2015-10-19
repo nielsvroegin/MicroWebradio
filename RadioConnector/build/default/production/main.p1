@@ -3824,10 +3824,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spiManager.h: 4: void spiManager_init(void);
 [; ;spiManager.h: 7: inline void spiManager_receivedByte();
 [; ;spiManager.h: 10: void spiManager_processData();
-[; ;spiManager.h: 14: static void handleMessage(unsigned char messageType);
-[; ;spiManager.h: 18: static void keepAlive(unsigned char messageSize);
+[; ;spiManager.h: 13: void spiManager_sendKeepAlive();
+[; ;spiManager.h: 17: static void handleMessage(unsigned char messageType);
+[; ;spiManager.h: 20: static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
+[; ;spiManager.h: 24: static void handleKeepAlive(unsigned char messageSize);
 "16 main.c
-[p x OSC=HS ]
+[p x OSC=HSPLL ]
 "17
 [p x FCMEN=OFF ]
 "18
@@ -3890,9 +3892,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR2=OFF ]
 "65
 [p x EBTR3=OFF ]
-[v F4151 `(v ~T0 @X0 1 tf ]
+[v F4156 `(v ~T0 @X0 1 tf ]
 "67
-[v _ISR `IF4151 ~T0 @X0 1 e ]
+[v _ISR `IF4156 ~T0 @X0 1 e ]
 "68
 {
 [; ;main.c: 67: void interrupt ISR(void)
@@ -3978,14 +3980,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 "102
 [e ( _esp8266_listAp ..  ]
 "105
-[v F4153 `b ~T0 @X0 1 s res ]
+[v F4158 `b ~T0 @X0 1 s res ]
 [; ;main.c: 105: static bit res;
 [; ;main.c: 106: res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
 "106
-[e = F4153 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
+[e = F4158 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
 [; ;main.c: 108: res = esp8266_quitAp();
 "108
-[e = F4153 ( _esp8266_quitAp ..  ]
+[e = F4158 ( _esp8266_quitAp ..  ]
 [; ;main.c: 111: LATAbits.LATA0 = 1;
 "111
 [e = . . _LATAbits 0 0 -> -> 1 `i `uc ]
@@ -4055,9 +4057,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 142: b--;
 "142
 [e -- _b -> -> 1 `i `ui ]
-[; ;main.c: 143: _delay((unsigned long)((1)*(20000000/4000.0)));
+[; ;main.c: 143: _delay((unsigned long)((1)*(40000000/4000.0)));
 "143
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 40000000 `l `d .4000.0 `ul ]
 "144
 }
 [; ;main.c: 144: } while(b);

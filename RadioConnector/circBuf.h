@@ -11,8 +11,8 @@ typedef volatile struct
 } circBuf_t;
 
 // Push byte to buffer
-bit circBufPush(circBuf_t *c, unsigned char data);
+inline bit circBufPush(circBuf_t *c, unsigned char data);
 
 // Read byte from buffer
-bit circBufPop(circBuf_t *c, unsigned char *data);
+inline bit circBufPop(circBuf_t *c, unsigned char *data);
 

@@ -2,7 +2,7 @@
 
 #include "circBuf.h"
 
-bit circBufPush(circBuf_t *c, unsigned char data)
+inline bit circBufPush(circBuf_t *c, unsigned char data)
 {
     unsigned char next = c->head + 1;
     if (next >= c->maxLen)
@@ -17,7 +17,7 @@ bit circBufPush(circBuf_t *c, unsigned char data)
     return 1;
 }
  
-bit circBufPop(circBuf_t *c, unsigned char *data)
+inline bit circBufPop(circBuf_t *c, unsigned char *data)
 {
     // if the head isn't ahead of the tail, we don't have any characters
     if (c->head == c->tail)

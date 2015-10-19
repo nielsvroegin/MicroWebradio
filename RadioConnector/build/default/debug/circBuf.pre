@@ -11,13 +11,13 @@ const unsigned char maxLen;
 } circBuf_t;
 
 
-bit circBufPush(circBuf_t *c, unsigned char data);
+inline bit circBufPush(circBuf_t *c, unsigned char data);
 
 
-bit circBufPop(circBuf_t *c, unsigned char *data);
+inline bit circBufPop(circBuf_t *c, unsigned char *data);
 
 # 5 "circBuf.c"
-bit circBufPush(circBuf_t *c, unsigned char data)
+inline bit circBufPush(circBuf_t *c, unsigned char data)
 {
 unsigned char next = c->head + 1;
 if (next >= c->maxLen)
@@ -32,7 +32,7 @@ c->head = next;
 return 1;
 }
 
-bit circBufPop(circBuf_t *c, unsigned char *data)
+inline bit circBufPop(circBuf_t *c, unsigned char *data)
 {
 
 if (c->head == c->tail)

@@ -66,10 +66,10 @@ const unsigned char maxLen;
 } circBuf_t;
 
 
-bit circBufPush(circBuf_t *c, unsigned char data);
+inline bit circBufPush(circBuf_t *c, unsigned char data);
 
 
-bit circBufPop(circBuf_t *c, unsigned char *data);
+inline bit circBufPop(circBuf_t *c, unsigned char *data);
 
 # 4 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\__size_t.h"
 typedef unsigned size_t;
@@ -5136,7 +5136,7 @@ TRISC7 = 1;
 TRISC6 = 1;
 
 
-SPBRG = ((20000000 / 4) / 115200) - 1;
+SPBRG = ((40000000 / 4) / 115200) - 1;
 SYNC = 0;
 BRGH = 1;
 BRG16 = 1;

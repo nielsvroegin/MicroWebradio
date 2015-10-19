@@ -20,7 +20,7 @@ void esp8266_init(void) {
     #define BAUDRATE 115200
     
     #ifndef _XTAL_FREQ
-        #define _XTAL_FREQ 20000000
+        #define _XTAL_FREQ 40000000
     #endif
     
     TRISC7 = 1;

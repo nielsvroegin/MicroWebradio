@@ -1,5 +1,6 @@
 #include "spiManager.h"
 #include <plib/spi.h>
+#include <string.h>
 #include "circBuf.h"
 
 // Message types of Radio connector
@@ -47,8 +48,8 @@ inline void spiManager_receivedByte() {
         nextByte = 0x00;
     }
     
-    // Add read byte to buffer
-    circBufPush(&receiveBuffer, readByte);
+    // Add read byte to buffer    
+    circBufPush(&receiveBuffer, readByte);    
     
     SPI_Clear_Intr_Status_Bit;
 }
@@ -67,9 +68,28 @@ void spiManager_processData() {
     }
 }
 
-//------------- Static Functions -------------//
+//------------- Send message functions -------------//
+void spiManager_sendKeepAlive() {    
+    const unsigned char *aliveMessage = "Master Alive";
+    sendMessage(KEEPALIVE, aliveMessage, strlen(aliveMessage));
+}
 
-// Run sent command
+//------------- Static Functions -------------//
+// Send message to master
+static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength) {
+    circBufPush(&sendBuffer, messageType);
+    circBufPush(&sendBuffer, messageLength);
+    
+    for (unsigned char i = 0; i < messageLength; i++) {
+        circBufPush(&sendBuffer, *(message + i));
+    }
+    
+    // Trigger interrupt at master
+    LATAbits.LATA1 = 0;
+    LATAbits.LATA1 = 1;
+}
+
+// Handle received message
 static void handleMessage(unsigned char messageType) {
     unsigned char messageSize;
     
@@ -78,7 +98,7 @@ static void handleMessage(unsigned char messageType) {
     
     switch(messageType) {
         case KEEPALIVE:
-            keepAlive(messageSize);
+            handleKeepAlive(messageSize);
             break;
         default:
             break;
@@ -88,7 +108,8 @@ static void handleMessage(unsigned char messageType) {
 //------------- Commands (Static Functions) -------------//
 
 // Run keep alive command
-static void keepAlive(unsigned char messageSize) {
+static void handleKeepAlive(unsigned char messageSize) {
+    // Read keep alive message
     unsigned char keepAliveMessage[16];
     for(int i = 0; i < messageSize; i++) {
         unsigned char c;
@@ -99,24 +120,7 @@ static void keepAlive(unsigned char messageSize) {
     }
     keepAliveMessage[messageSize] = '\0';
     
-    // Send alive string to master
-    circBufPush(&sendBuffer, 1);
-    circBufPush(&sendBuffer, 12);
-    circBufPush(&sendBuffer, 'S');
-    circBufPush(&sendBuffer, 'l');
-    circBufPush(&sendBuffer, 'a');
-    circBufPush(&sendBuffer, 'v');
-    circBufPush(&sendBuffer, 'e');
-    circBufPush(&sendBuffer, ' ');
-    circBufPush(&sendBuffer, 'A');
-    circBufPush(&sendBuffer, 'l');
-    circBufPush(&sendBuffer, 'i');
-    circBufPush(&sendBuffer, 'v');
-    circBufPush(&sendBuffer, 'e');
-    circBufPush(&sendBuffer, '\0');
-    
-    // Trigger interrupt at master
-    LATAbits.LATA1 = 0;
-    LATAbits.LATA1 = 1;
+    // Send keep alive message back to master
+    spiManager_sendKeepAlive();
 }
 

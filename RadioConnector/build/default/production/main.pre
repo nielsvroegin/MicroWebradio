@@ -5021,16 +5021,22 @@ inline void spiManager_receivedByte();
 void spiManager_processData();
 
 
+void spiManager_sendKeepAlive();
+
+
 
 static void handleMessage(unsigned char messageType);
 
 
+static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
 
-static void keepAlive(unsigned char messageSize);
+
+
+static void handleKeepAlive(unsigned char messageSize);
 
 
 # 16 "main.c"
-#pragma config OSC = HS
+#pragma config OSC = HSPLL
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
 
@@ -5157,6 +5163,6 @@ esp8266_init();
 void msdelay(unsigned int b) {
 do {
 b--;
-_delay((unsigned long)((1)*(20000000/4000.0)));
+_delay((unsigned long)((1)*(40000000/4000.0)));
 } while(b);
 }

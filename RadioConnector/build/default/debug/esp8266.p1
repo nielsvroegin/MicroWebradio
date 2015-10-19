@@ -34,8 +34,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _RX9 `Vb ~T0 @X0 0 e@32094 ]
 "8445
 [v _TXEN `Vb ~T0 @X0 0 e@32101 ]
+[v F46 `(b ~T0 @X0 1 tf2`*VS2`uc ]
 "14 circBuf.h
-[v _circBufPush `(b ~T0 @X0 0 ef2`*VS2`uc ]
+[v _circBufPush `TF46 ~T0 @X0 0 e ]
 [v F27 `(v ~T0 @X0 1 tf1`*uc ]
 "41 esp8266.h
 [v _performCommand `(b ~T0 @X0 0 sf2`*Cuc`*F27 ]
@@ -65,8 +66,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _TXIF `Vb ~T0 @X0 0 e@31988 ]
 "3862
 [v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
+[v F50 `(b ~T0 @X0 1 tf2`*VS2`*uc ]
 "17 circBuf.h
-[v _circBufPop `(b ~T0 @X0 0 ef2`*VS2`*uc ]
+[v _circBufPop `TF50 ~T0 @X0 0 e ]
 [; ;esp8266.h: 1: typedef void lineProcessor(unsigned char *);
 [; ;esp8266.h: 4: struct AccessPoint
 [; ;esp8266.h: 5: {
@@ -94,8 +96,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;circBuf.h: 9: unsigned char tail;
 [; ;circBuf.h: 10: const unsigned char maxLen;
 [; ;circBuf.h: 11: } circBuf_t;
-[; ;circBuf.h: 14: bit circBufPush(circBuf_t *c, unsigned char data);
-[; ;circBuf.h: 17: bit circBufPop(circBuf_t *c, unsigned char *data);
+[; ;circBuf.h: 14: inline bit circBufPush(circBuf_t *c, unsigned char data);
+[; ;circBuf.h: 17: inline bit circBufPop(circBuf_t *c, unsigned char *data);
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;string.h: 14: extern void * memcpy(void *, const void *, size_t);
 [; ;string.h: 15: extern void * memmove(void *, const void *, size_t);
@@ -3915,9 +3917,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;esp8266.c: 27: TRISC6 = 1;
 "27
 [e = _TRISC6 -> -> 1 `i `b ]
-[; ;esp8266.c: 30: SPBRG = ((20000000 / 4) / 115200) - 1;
+[; ;esp8266.c: 30: SPBRG = ((40000000 / 4) / 115200) - 1;
 "30
-[e = _SPBRG -> - / / -> 20000000 `l -> -> 4 `i `l -> 115200 `l -> -> 1 `i `l `uc ]
+[e = _SPBRG -> - / / -> 40000000 `l -> -> 4 `i `l -> 115200 `l -> -> 1 `i `l `uc ]
 [; ;esp8266.c: 31: SYNC = 0;
 "31
 [e = _SYNC -> -> 0 `i `b ]
@@ -4107,8 +4109,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;esp8266.c: 111: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor) {
 [e :U _performCommand ]
 [v _cmd `*Cuc ~T0 @X0 1 r1 ]
-[v F4368 `(v ~T0 @X0 1 tf1`*uc ]
-[v _lineProcessor `*F4368 ~T0 @X0 1 r2 ]
+[v F4370 `(v ~T0 @X0 1 tf1`*uc ]
+[v _lineProcessor `*F4370 ~T0 @X0 1 r2 ]
 [f ]
 [; ;esp8266.c: 113: writeLine(cmd);
 "113
@@ -4161,7 +4163,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;esp8266.c: 128: if(lineProcessor != (0)) {
 "128
-[e $ ! != _lineProcessor -> -> 0 `i `*F4368 426  ]
+[e $ ! != _lineProcessor -> -> 0 `i `*F4370 426  ]
 {
 [; ;esp8266.c: 129: lineProcessor(line);
 "129

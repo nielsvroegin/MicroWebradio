@@ -24,7 +24,7 @@ void setup() {
   // Initialize SPI:
   SPI.begin();
   // Set SPI settings  
-  SPI.beginTransaction(SPISettings(100000, MSBFIRST, SPI_MODE1));
+  SPI.beginTransaction(SPISettings(200000, MSBFIRST, SPI_MODE1));
 }
 
 void loop() {
@@ -37,12 +37,12 @@ void loop() {
       
       digitalWrite(slaveSelectPin,LOW);
 
+      Serial.println("Keep alive sent");
+
       SPI.transfer(0x01);
       SPI.transfer(sizeof(message));
       SPI.transfer(message, sizeof(message));
 
-      
-      Serial.println("Keep alive sent");
 
       // 
       //for(int i = 0; i < 100 ; i++) {
@@ -56,18 +56,18 @@ void loop() {
   }
 }
 
-void incomingMessage() {
-  const char delay = 10;  
-  char dummy;
-
+void incomingMessage() {  
+  const char delay = 1;
+  
+  // Show led interrupt has been triggered 
   if(ledState == LOW) {
     ledState = HIGH;
   } else {
     ledState = LOW;
-  }
-  
+  }  
   digitalWrite(led, ledState);  
 
+  // Receive message
   digitalWrite(slaveSelectPin,LOW);
 
   char messageType;
@@ -75,30 +75,12 @@ void incomingMessage() {
   delayMicroseconds(delay);
   messageType = SPI.transfer(0x00);
   delayMicroseconds(delay);
-  
-  //messageType = SPI.transfer(0x00);
-  //messageType = SPI.transfer(0x00);
-  //Serial.print(String(messageType, HEX));
-  //Serial.print(":");
-  
-  //if (messageType == 0) { // Try once again when message type not yet set
-  //  messageType = SPI.transfer(0x00);  
-  //}
-  
-  //for (int i = 0; i < 10; i++) {
-  //  messageType = SPI.transfer(0x00); 
-
-    
-  //  Serial.print(String(messageType, HEX));
-  //  Serial.print(":");
-    
-  //}
-  
+   
   messageType = SPI.transfer(0x00);
   delayMicroseconds(delay);
   if(messageType == 1) {
     int messageLength = SPI.transfer(0x00);
-    delayMicroseconds(delay);
+    delayMicroseconds(delay);    
     char message[messageLength];
   
     for(int i = 0; i < messageLength; i++) {
@@ -107,6 +89,7 @@ void incomingMessage() {
     }
   
     Serial.println(message);
+    Serial.println(String(messageLength));
   }
 
   digitalWrite(slaveSelectPin,HIGH);

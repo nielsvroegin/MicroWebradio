@@ -9,10 +9,16 @@ inline void spiManager_receivedByte();
 // Process data of buffer
 void spiManager_processData();
 
+//------------- Send message functions -------------//
+void spiManager_sendKeepAlive();
+
 //------------- Static Functions -------------//
 // Read and handle message
 static void handleMessage(unsigned char messageType);
 
-//------------- Commands (Static Functions) -------------//
-// Run keep alive command
-static void keepAlive(unsigned char messageSize);
+// Send message to master
+static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
+
+//------------- Handle message funtions (Static Functions) -------------//
+// Handle keep alive message
+static void handleKeepAlive(unsigned char messageSize);

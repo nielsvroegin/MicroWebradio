@@ -10,13 +10,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;circBuf.h: 9: unsigned char tail;
 [; ;circBuf.h: 10: const unsigned char maxLen;
 [; ;circBuf.h: 11: } circBuf_t;
-[; ;circBuf.h: 14: bit circBufPush(circBuf_t *c, unsigned char data);
-[; ;circBuf.h: 17: bit circBufPop(circBuf_t *c, unsigned char *data);
+[; ;circBuf.h: 14: inline bit circBufPush(circBuf_t *c, unsigned char data);
+[; ;circBuf.h: 17: inline bit circBufPop(circBuf_t *c, unsigned char *data);
+[v F11 `(b ~T0 @X0 1 tf2`*VS1`uc ]
 "5 circBuf.c
-[v _circBufPush `(b ~T0 @X0 1 ef2`*VS1`uc ]
+[v _circBufPush `TF11 ~T0 @X0 1 e ]
 "6
 {
-[; ;circBuf.c: 5: bit circBufPush(circBuf_t *c, unsigned char data)
+[; ;circBuf.c: 5: inline bit circBufPush(circBuf_t *c, unsigned char data)
 [; ;circBuf.c: 6: {
 [e :U _circBufPush ]
 "5
@@ -57,11 +58,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 "18
 [e :UE 2 ]
 }
+[v F15 `(b ~T0 @X0 1 tf2`*VS1`*uc ]
 "20
-[v _circBufPop `(b ~T0 @X0 1 ef2`*VS1`*uc ]
+[v _circBufPop `TF15 ~T0 @X0 1 e ]
 "21
 {
-[; ;circBuf.c: 20: bit circBufPop(circBuf_t *c, unsigned char *data)
+[; ;circBuf.c: 20: inline bit circBufPop(circBuf_t *c, unsigned char *data)
 [; ;circBuf.c: 21: {
 [e :U _circBufPop ]
 "20
