@@ -10,6 +10,7 @@ const int slaveSelectPin = 10;
 const int interruptPin = 2;
 const int led = 3;
 int ledState = LOW;
+volatile boolean unprocessedMessage = false;
 
 void setup() {
   // Setup serial
@@ -50,6 +51,11 @@ void loop() {
       Serial.println();
     }    
   }
+
+  // Check for unprcoessed messages
+  if (unprocessedMessage) {
+    processIncomingMessage();
+  }
 }
 
 /**
@@ -64,13 +70,21 @@ void incomingMessage() {
   }  
   digitalWrite(led, ledState);  
 
+  // Set incoming message true
+  unprocessedMessage = true;
+}
+
+void processIncomingMessage() {
+  // Message will be processed, so clear bool
+  unprocessedMessage = false;
+  
   // Receive message
   digitalWrite(slaveSelectPin,LOW);
 
   // Ignore 0 and read message type
   byte messageType;
   while(messageType == 0x00) {
-    messageType = transferByte(0x00);        
+    messageType = SPI.transfer(0x00);        
   }
   
   // Read message length
@@ -87,13 +101,6 @@ void incomingMessage() {
   }
   
   digitalWrite(slaveSelectPin,HIGH);
-}
-
-byte transferByte(const byte c) {
-  byte receivedByte = SPI.transfer(c);
-  //delayMicroseconds(1);  
-
-  return receivedByte;
 }
 
 //------------- Send message Functions -------------//
@@ -140,7 +147,7 @@ void sendListAp() {
  */
 void readKeepAlive(int messageLength) {
   for(int i = 0; i < messageLength; i++) {
-    char c = transferByte(0x00);
+    char c = SPI.transfer(0x00);
     Serial.print(c);    
   }
   
@@ -151,10 +158,10 @@ void readKeepAlive(int messageLength) {
  * Read received list accesspoint message
  */
 void readListAccesspoints(int messageLength) {
-  char message[messageLength];
+  char message[64];
   
   for(int i = 0; i < messageLength; i++) {
-    byte c = transferByte(0x00);    
+    byte c = SPI.transfer(0x00);    
 
     if(i > 1) {
       message[i-2] = c;
