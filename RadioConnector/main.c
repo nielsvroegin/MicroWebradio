@@ -98,9 +98,6 @@ void main(void) {
     // Check if ESP8266 is started
     while(!esp8266_isOnline());
     
-    // List APs
-    esp8266_listAp();
-    
     // Join AP
     static bit res;
     res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");

@@ -7,9 +7,9 @@ typedef void lineProcessor(unsigned char *);
 
 struct AccessPoint
 {
-unsigned char ecn;
+int ecn;
 unsigned char ssid[32];
-char rssi;
+int rssi;
 };
 
 
@@ -27,7 +27,7 @@ bit esp8266_isOnline(void);
 bit esp8266_restart(void);
 
 
-bit esp8266_listAp(void);
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
 
 
 bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
@@ -5167,12 +5167,17 @@ return performCommand("AT+RST", (0));
 }
 
 
-bit esp8266_listAp(void) {
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef) {
 
 amountOfAccessPoints = 0;
 
 
-return performCommand("AT+CWLAP", processAccessPointLine);
+performCommand("AT+CWLAP", processAccessPointLine);
+
+
+*amountOfAccessPointsRef = amountOfAccessPoints;
+
+return accessPoints;
 }
 
 
@@ -5212,7 +5217,7 @@ accessPoints[amountOfAccessPoints].rssi = atoi(strtok((0),","));
 amountOfAccessPoints++;
 }
 
-# 111
+# 116
 static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor) {
 
 writeLine(cmd);
@@ -5249,22 +5254,21 @@ putch('\n');
 
 
 static void readLine(unsigned char line[50]) {
-unsigned char charCnt = 0;
 
-while(1) {
+for(unsigned char charCnt = 0; charCnt < 50; charCnt++) {
 unsigned char c = getch();
 
 if(c == '\n') {
+line[charCnt] = '\0';
 return;
 } else if (c == '\r') {
 line[charCnt] = '\0';
 } else {
 line[charCnt] = c;
 }
-
-charCnt++;
 }
 
+line[49] = '\0';
 return;
 }
 

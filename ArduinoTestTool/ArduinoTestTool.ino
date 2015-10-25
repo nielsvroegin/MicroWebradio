@@ -39,16 +39,12 @@ void loop() {
 
       Serial.println("Keep alive sent");
 
-      SPI.transfer(0x01);
-      SPI.transfer(sizeof(message));
-      SPI.transfer(message, sizeof(message));
+      //SPI.transfer(0x01);
+      //SPI.transfer(sizeof(message));
+      //SPI.transfer(message, sizeof(message));
 
-
-      // 
-      //for(int i = 0; i < 100 ; i++) {
-      //  char c = SPI.transfer(0X00);
-      //  Serial.write(c);
-      //}
+      SPI.transfer(0x02);
+      SPI.transfer(0x00);
 
       digitalWrite(slaveSelectPin,HIGH);
      
@@ -71,25 +67,26 @@ void incomingMessage() {
   digitalWrite(slaveSelectPin,LOW);
 
   char messageType;
-  messageType = SPI.transfer(0x00);
-  delayMicroseconds(delay);
-  messageType = SPI.transfer(0x00);
-  delayMicroseconds(delay);
-   
-  messageType = SPI.transfer(0x00);
-  delayMicroseconds(delay);
-  if(messageType == 1) {
+  while(messageType == 0x00) {
+    messageType = SPI.transfer(0x00);
+    delayMicroseconds(delay);
+  }
+  
+  if(messageType == 2) {
     int messageLength = SPI.transfer(0x00);
     delayMicroseconds(delay);    
     char message[messageLength];
   
     for(int i = 0; i < messageLength; i++) {
-      message[i] = SPI.transfer(0x00);
+      char c = SPI.transfer(0x00);
       delayMicroseconds(delay);
+
+      if(i > 1) {
+        message[i-2] = c;
+      }
     }
   
-    Serial.println(message);
-    Serial.println(String(messageLength));
+    Serial.println(message);    
   }
 
   digitalWrite(slaveSelectPin,HIGH);

@@ -2,6 +2,11 @@
 #include <plib/spi.h>
 #include <string.h>
 #include "circBuf.h"
+#include "esp8266.h"
+
+#ifndef _XTAL_FREQ
+    #define _XTAL_FREQ 40000000
+#endif
 
 // Message types of Radio connector
 #define KEEPALIVE 1
@@ -11,7 +16,7 @@
 
 //------------- Global Vars -------------//
 CIRCBUF_DEF(receiveBuffer, 32);
-CIRCBUF_DEF(sendBuffer, 32);
+CIRCBUF_DEF(sendBuffer, 64);
 
 unsigned char nextByte;
 
@@ -45,7 +50,7 @@ inline void spiManager_receivedByte() {
     
     // Load next byte from send buffer
     if(!circBufPop(&sendBuffer, &nextByte)) {        
-        nextByte = 0x00;
+        nextByte = 0x00;        
     }
     
     // Add read byte to buffer    
@@ -69,24 +74,41 @@ void spiManager_processData() {
 }
 
 //------------- Send message functions -------------//
+
+// Send alive message to 
 void spiManager_sendKeepAlive() {    
-    const unsigned char *aliveMessage = "Master Alive";
+    const unsigned char *aliveMessage = "Slave Alive";
     sendMessage(KEEPALIVE, aliveMessage, strlen(aliveMessage));
+}
+
+// Send accesspoints to master
+void spiManager_sendAccessPoints(unsigned char accessPointsCount, struct AccessPoint *accessPoints) {
+    for (unsigned char i = 0; i < accessPointsCount; i++) {
+        struct AccessPoint *accessPoint = accessPoints + i;
+        
+        sendMessage(LISTACCESSPOINTS, (unsigned char *)accessPoint, sizeof(struct AccessPoint));
+    }
 }
 
 //------------- Static Functions -------------//
 // Send message to master
 static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength) {
+    
+    // Send message type/length
     circBufPush(&sendBuffer, messageType);
     circBufPush(&sendBuffer, messageLength);
     
-    for (unsigned char i = 0; i < messageLength; i++) {
+    // Send message
+    for (unsigned char i = 0; i < messageLength; i++) {        
         circBufPush(&sendBuffer, *(message + i));
     }
     
     // Trigger interrupt at master
     LATAbits.LATA1 = 0;
     LATAbits.LATA1 = 1;
+    
+    // Wait until send buffer is empty   
+    while(sendBuffer.head != sendBuffer.tail);    
 }
 
 // Handle received message
@@ -99,6 +121,9 @@ static void handleMessage(unsigned char messageType) {
     switch(messageType) {
         case KEEPALIVE:
             handleKeepAlive(messageSize);
+            break;
+        case LISTACCESSPOINTS:
+            handleListAccessPoints();
             break;
         default:
             break;
@@ -122,5 +147,15 @@ static void handleKeepAlive(unsigned char messageSize) {
     
     // Send keep alive message back to master
     spiManager_sendKeepAlive();
+}
+
+static void handleListAccessPoints() {
+    unsigned char accessPointsCount;
+    
+    // List accesspoints and point first one to pointer
+    struct AccessPoint *accessPoints = esp8266_listAp(&accessPointsCount);
+    
+    // Send access points to master
+    spiManager_sendAccessPoints(accessPointsCount, accessPoints);    
 }
 

@@ -7,9 +7,9 @@ typedef void lineProcessor(unsigned char *);
 
 struct AccessPoint
 {
-unsigned char ecn;
+int ecn;
 unsigned char ssid[32];
-char rssi;
+int rssi;
 };
 
 
@@ -27,7 +27,7 @@ bit esp8266_isOnline(void);
 bit esp8266_restart(void);
 
 
-bit esp8266_listAp(void);
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
 
 
 bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
@@ -5118,20 +5118,20 @@ extern char * ultoa(char * buf, unsigned long val, int base);
 
 extern char * ftoa(float f, int * status);
 
-# 8 "esp8266.c"
+# 10 "esp8266.c"
 unsigned char receiveBuffer_space[32]; circBuf_t receiveBuffer = { receiveBuffer_space,0,0,32};
 
 static unsigned char command[64];
 
 static unsigned char amountOfAccessPoints;
-static struct AccessPoint accessPoints[10];
+static struct AccessPoint accessPoints[15];
 
 
 
 
 void esp8266_init(void) {
 
-# 26
+# 28
 TRISC7 = 1;
 TRISC6 = 1;
 
@@ -5167,12 +5167,17 @@ return performCommand("AT+RST", (0));
 }
 
 
-bit esp8266_listAp(void) {
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef) {
 
 amountOfAccessPoints = 0;
 
 
-return performCommand("AT+CWLAP", processAccessPointLine);
+performCommand("AT+CWLAP", processAccessPointLine);
+
+
+*amountOfAccessPointsRef = amountOfAccessPoints;
+
+return accessPoints;
 }
 
 
@@ -5196,6 +5201,11 @@ static void processAccessPointLine(unsigned char *line){
 unsigned char *parsedData;
 
 
+if(amountOfAccessPoints == 15) {
+return;
+}
+
+
 parsedData = strstr(line, "+CWLAP:(");
 if(parsedData == (0))
 return;
@@ -5212,7 +5222,7 @@ accessPoints[amountOfAccessPoints].rssi = atoi(strtok((0),","));
 amountOfAccessPoints++;
 }
 
-# 111
+# 123
 static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor) {
 
 writeLine(cmd);
@@ -5249,22 +5259,21 @@ putch('\n');
 
 
 static void readLine(unsigned char line[50]) {
-unsigned char charCnt = 0;
 
-while(1) {
+for(unsigned char charCnt = 0; charCnt < 50; charCnt++) {
 unsigned char c = getch();
 
 if(c == '\n') {
+line[charCnt] = '\0';
 return;
 } else if (c == '\r') {
 line[charCnt] = '\0';
 } else {
 line[charCnt] = c;
 }
-
-charCnt++;
 }
 
+line[49] = '\0';
 return;
 }
 

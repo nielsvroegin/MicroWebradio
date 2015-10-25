@@ -25,8 +25,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _setup `(v ~T0 @X0 0 ef ]
 "20 esp8266.h
 [v _esp8266_isOnline `(b ~T0 @X0 0 ef ]
-"26
-[v _esp8266_listAp `(b ~T0 @X0 0 ef ]
 "29
 [v _esp8266_joinAp `(b ~T0 @X0 0 ef2`*Cuc`*Cuc ]
 "32
@@ -3804,15 +3802,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;esp8266.h: 1: typedef void lineProcessor(unsigned char *);
 [; ;esp8266.h: 4: struct AccessPoint
 [; ;esp8266.h: 5: {
-[; ;esp8266.h: 6: unsigned char ecn;
+[; ;esp8266.h: 6: int ecn;
 [; ;esp8266.h: 7: unsigned char ssid[32];
-[; ;esp8266.h: 8: char rssi;
+[; ;esp8266.h: 8: int rssi;
 [; ;esp8266.h: 9: };
 [; ;esp8266.h: 14: void esp8266_init(void);
 [; ;esp8266.h: 17: void esp8266_fillBuffer(unsigned char c);
 [; ;esp8266.h: 20: bit esp8266_isOnline(void);
 [; ;esp8266.h: 23: bit esp8266_restart(void);
-[; ;esp8266.h: 26: bit esp8266_listAp(void);
+[; ;esp8266.h: 26: struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
 [; ;esp8266.h: 29: bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
 [; ;esp8266.h: 32: bit esp8266_quitAp(void);
 [; ;esp8266.h: 36: static void processAccessPointLine(unsigned char *line);
@@ -3825,9 +3823,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spiManager.h: 7: inline void spiManager_receivedByte();
 [; ;spiManager.h: 10: void spiManager_processData();
 [; ;spiManager.h: 13: void spiManager_sendKeepAlive();
-[; ;spiManager.h: 17: static void handleMessage(unsigned char messageType);
-[; ;spiManager.h: 20: static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
-[; ;spiManager.h: 24: static void handleKeepAlive(unsigned char messageSize);
+[; ;spiManager.h: 16: void spiManager_sendAccessPoints(unsigned char accessPointsCount, struct AccessPoint *accessPoints);
+[; ;spiManager.h: 20: static void handleMessage(unsigned char messageType);
+[; ;spiManager.h: 23: static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
+[; ;spiManager.h: 27: static void handleKeepAlive(unsigned char messageSize);
+[; ;spiManager.h: 30: static void handleListAccessPoints();
 "16 main.c
 [p x OSC=HSPLL ]
 "17
@@ -3892,9 +3892,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR2=OFF ]
 "65
 [p x EBTR3=OFF ]
-[v F4156 `(v ~T0 @X0 1 tf ]
+[v F4160 `(v ~T0 @X0 1 tf ]
 "67
-[v _ISR `IF4156 ~T0 @X0 1 e ]
+[v _ISR `IF4160 ~T0 @X0 1 e ]
 "68
 {
 [; ;main.c: 67: void interrupt ISR(void)
@@ -3976,97 +3976,94 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 409 ]
 [e $ ! ( _esp8266_isOnline ..  410  ]
 [e :U 411 ]
-[; ;main.c: 102: esp8266_listAp();
 "102
-[e ( _esp8266_listAp ..  ]
+[v F4162 `b ~T0 @X0 1 s res ]
+[; ;main.c: 102: static bit res;
+[; ;main.c: 103: res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
+"103
+[e = F4162 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
+[; ;main.c: 105: res = esp8266_quitAp();
 "105
-[v F4158 `b ~T0 @X0 1 s res ]
-[; ;main.c: 105: static bit res;
-[; ;main.c: 106: res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
-"106
-[e = F4158 ( _esp8266_joinAp (2 , :s 1C :s 2C ]
-[; ;main.c: 108: res = esp8266_quitAp();
+[e = F4162 ( _esp8266_quitAp ..  ]
+[; ;main.c: 108: LATAbits.LATA0 = 1;
 "108
-[e = F4158 ( _esp8266_quitAp ..  ]
-[; ;main.c: 111: LATAbits.LATA0 = 1;
-"111
 [e = . . _LATAbits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 113: while(1) {
-"113
+[; ;main.c: 110: while(1) {
+"110
 [e :U 413 ]
 {
-[; ;main.c: 114: spiManager_processData();
-"114
+[; ;main.c: 111: spiManager_processData();
+"111
 [e ( _spiManager_processData ..  ]
-"115
+"112
 }
 [e :U 412 ]
-"113
+"110
 [e $U 413  ]
 [e :U 414 ]
-[; ;main.c: 115: }
-[; ;main.c: 116: return;
-"116
+[; ;main.c: 112: }
+[; ;main.c: 113: return;
+"113
 [e $UE 408  ]
-[; ;main.c: 117: }
-"117
+[; ;main.c: 114: }
+"114
 [e :UE 408 ]
 }
-"119
+"116
 [v _setup `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 119: void setup(void) {
+[; ;main.c: 116: void setup(void) {
 [e :U _setup ]
 [f ]
-[; ;main.c: 121: TRISAbits.TRISA0 = 0;
-"121
+[; ;main.c: 118: TRISAbits.TRISA0 = 0;
+"118
 [e = . . _TRISAbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 124: LATAbits.LATA0 = 0;
-"124
+[; ;main.c: 121: LATAbits.LATA0 = 0;
+"121
 [e = . . _LATAbits 0 0 -> -> 0 `i `uc ]
-[; ;main.c: 127: GIE = 1;
-"127
+[; ;main.c: 124: GIE = 1;
+"124
 [e = _GIE -> -> 1 `i `b ]
-[; ;main.c: 128: PEIE = 1;
-"128
+[; ;main.c: 125: PEIE = 1;
+"125
 [e = _PEIE -> -> 1 `i `b ]
-[; ;main.c: 131: spiManager_init();
-"131
+[; ;main.c: 128: spiManager_init();
+"128
 [e ( _spiManager_init ..  ]
-[; ;main.c: 134: msdelay(1000);
-"134
+[; ;main.c: 131: msdelay(1000);
+"131
 [e ( _msdelay (1 -> -> 1000 `i `ui ]
-[; ;main.c: 137: esp8266_init();
-"137
+[; ;main.c: 134: esp8266_init();
+"134
 [e ( _esp8266_init ..  ]
-[; ;main.c: 138: }
-"138
+[; ;main.c: 135: }
+"135
 [e :UE 415 ]
 }
-"140
+"137
 [v _msdelay `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;main.c: 140: void msdelay(unsigned int b) {
+[; ;main.c: 137: void msdelay(unsigned int b) {
 [e :U _msdelay ]
 [v _b `ui ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 141: do {
-"141
+[; ;main.c: 138: do {
+"138
 [e :U 419 ]
 {
-[; ;main.c: 142: b--;
-"142
+[; ;main.c: 139: b--;
+"139
 [e -- _b -> -> 1 `i `ui ]
-[; ;main.c: 143: _delay((unsigned long)((1)*(40000000/4000.0)));
-"143
+[; ;main.c: 140: _delay((unsigned long)((1)*(40000000/4000.0)));
+"140
 [e ( __delay (1 -> * -> -> 1 `i `d / -> -> 40000000 `l `d .4000.0 `ul ]
-"144
+"141
 }
-[; ;main.c: 144: } while(b);
+[; ;main.c: 141: } while(b);
 [e $ != _b -> -> 0 `i `ui 419  ]
 [e :U 418 ]
-[; ;main.c: 145: }
-"145
+[; ;main.c: 142: }
+"142
 [e :UE 416 ]
 }
 [a 2C 67 72 78 65 74 82 68 81 0 ]

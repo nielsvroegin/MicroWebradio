@@ -4962,9 +4962,9 @@ typedef void lineProcessor(unsigned char *);
 
 struct AccessPoint
 {
-unsigned char ecn;
+int ecn;
 unsigned char ssid[32];
-char rssi;
+int rssi;
 };
 
 
@@ -4982,7 +4982,7 @@ bit esp8266_isOnline(void);
 bit esp8266_restart(void);
 
 
-bit esp8266_listAp(void);
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
 
 
 bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
@@ -5024,6 +5024,9 @@ void spiManager_processData();
 void spiManager_sendKeepAlive();
 
 
+void spiManager_sendAccessPoints(unsigned char accessPointsCount, struct AccessPoint *accessPoints);
+
+
 
 static void handleMessage(unsigned char messageType);
 
@@ -5033,6 +5036,9 @@ static void sendMessage(const unsigned char messageType, const unsigned char *me
 
 
 static void handleKeepAlive(unsigned char messageSize);
+
+
+static void handleListAccessPoints();
 
 
 # 16 "main.c"
@@ -5120,9 +5126,6 @@ setup();
 
 
 while(!esp8266_isOnline());
-
-
-esp8266_listAp();
 
 
 static bit res;

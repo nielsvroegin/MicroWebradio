@@ -4,13 +4,15 @@
 #include <xc.h>
 #include <stdlib.h>
 
+#define MAXACCESSPOINTS 15
+
 //------------- Global Vars -------------//
 CIRCBUF_DEF(receiveBuffer, 32);
 
 static unsigned char command[64];
 
 static unsigned char amountOfAccessPoints;
-static struct AccessPoint accessPoints[10];
+static struct AccessPoint accessPoints[MAXACCESSPOINTS];
 
 //------------- Public Functions -------------//
 
@@ -57,13 +59,18 @@ bit esp8266_restart(void) {
     return performCommand("AT+RST", NULL);
 }
 
-// List Access Points
-bit esp8266_listAp(void) {   
+// List Access Points, returns amount of found accesspoints
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef) {   
     // Reset amount of access points
     amountOfAccessPoints = 0;
     
     // Request new access points
-    return performCommand("AT+CWLAP", processAccessPointLine);    
+    performCommand("AT+CWLAP", processAccessPointLine);
+    
+    // Set amount of accesspoints
+    *amountOfAccessPointsRef = amountOfAccessPoints;
+
+    return accessPoints;
 }
 
 // Join Access Point
@@ -85,6 +92,11 @@ bit esp8266_quitAp(void) {
 
 static void processAccessPointLine(unsigned char *line){
     unsigned char *parsedData;
+    
+    // Check if space for another accesspoint
+    if(amountOfAccessPoints == MAXACCESSPOINTS) {
+        return;
+    }
     
     // Check if line contains CWLAP(AccessPoint data)
     parsedData = strstr(line, "+CWLAP:(");    
@@ -143,23 +155,22 @@ static void writeLine(unsigned const char *line) {
 }
 
 // Read line from module
-static void readLine(unsigned char line[50]) {
-    unsigned char charCnt = 0;    
+static void readLine(unsigned char line[50]) {      
     
-    while(1) {
+    for(unsigned char charCnt = 0; charCnt < 50; charCnt++) {
         unsigned char c = getch();       
         
         if(c == '\n') { // End of line, return line
+            line[charCnt] = '\0';
             return;
         } else if (c == '\r') { // Replace carriage return by \0 char
             line[charCnt] = '\0';
         } else { // Add char to line
             line[charCnt] = c; 
-        }
-        
-        charCnt++;        
+        }   
     }
     
+    line[49] = '\0';
     return;
 }
 

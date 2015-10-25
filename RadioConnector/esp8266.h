@@ -3,9 +3,9 @@ typedef void lineProcessor(unsigned char *);
 //------------- Structs -------------//
 struct AccessPoint
 {
-   unsigned char ecn;
+   int ecn;
    unsigned char ssid[32];
-   char rssi;
+   int rssi;
 };
 
 //------------- Public Functions -------------//
@@ -22,8 +22,8 @@ bit esp8266_isOnline(void);
 // Restart module
 bit esp8266_restart(void);          
 
-// List Access Points
-bit esp8266_listAp(void);
+// List Access Points, returns amount of found accesspoints
+struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
 
 // Join Access Point
 bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
