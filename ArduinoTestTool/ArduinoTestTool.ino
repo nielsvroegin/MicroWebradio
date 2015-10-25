@@ -30,8 +30,8 @@ void setup() {
   digitalWrite(slaveSelectPin,HIGH);  
   // Initialize SPI:
   SPI.begin();
-  // Set SPI settings  
-  SPI.beginTransaction(SPISettings(200000, MSBFIRST, SPI_MODE1));
+  //Set used interrupt
+  SPI.usingInterrupt(digitalPinToInterrupt(interruptPin));    
 }
 
 void loop() {
@@ -79,17 +79,17 @@ void processIncomingMessage() {
   unprocessedMessage = false;
   
   // Receive message
+  SPI.beginTransaction(SPISettings(200000, MSBFIRST, SPI_MODE1));  
   digitalWrite(slaveSelectPin,LOW);
 
   // Ignore 0 and read message type
-  byte messageType;
+  byte messageType = SPI.transfer(0x00);  
   while(messageType == 0x00) {
-    messageType = SPI.transfer(0x00);        
-  }
+    messageType = SPI.transfer(0x00);    
+  }  
   
   // Read message length
-  int messageLength = SPI.transfer(0x00);      
-  delayMicroseconds(1);
+  byte messageLength = SPI.transfer(0x00);        
 
   // Proccess message
   if (messageType == KEEPALIVE) {
@@ -101,6 +101,7 @@ void processIncomingMessage() {
   }
   
   digitalWrite(slaveSelectPin,HIGH);
+  SPI.endTransaction();
 }
 
 //------------- Send message Functions -------------//
@@ -115,6 +116,7 @@ void sendKeepAlive(void) {
   Serial.println("---> Sending keep alive");
 
   // Request keep alive
+  SPI.beginTransaction(SPISettings(200000, MSBFIRST, SPI_MODE1));  
   digitalWrite(slaveSelectPin,LOW);
   
   SPI.transfer(KEEPALIVE);
@@ -122,6 +124,7 @@ void sendKeepAlive(void) {
   SPI.transfer(message, sizeof(message));
   
   digitalWrite(slaveSelectPin,HIGH);
+  SPI.endTransaction();
 }
 
 /**
@@ -132,12 +135,14 @@ void sendListAp() {
   Serial.println("---> Sending list accesspoints");
 
   // Request accesspoints
+  SPI.beginTransaction(SPISettings(200000, MSBFIRST, SPI_MODE1));
   digitalWrite(slaveSelectPin,LOW);
   
   SPI.transfer(LISTACCESSPOINTS);
   SPI.transfer(0x00);
   
   digitalWrite(slaveSelectPin,HIGH);
+  SPI.endTransaction();
 }
 
 //------------- Read message Functions -------------//
@@ -145,8 +150,8 @@ void sendListAp() {
 /**
  * Read received keep alive message
  */
-void readKeepAlive(int messageLength) {
-  for(int i = 0; i < messageLength; i++) {
+void readKeepAlive(byte messageLength) {
+  for(byte i = 0; i < messageLength; i++) {
     char c = SPI.transfer(0x00);
     Serial.print(c);    
   }
@@ -157,10 +162,10 @@ void readKeepAlive(int messageLength) {
 /**
  * Read received list accesspoint message
  */
-void readListAccesspoints(int messageLength) {
+void readListAccesspoints(byte messageLength) {
   char message[64];
   
-  for(int i = 0; i < messageLength; i++) {
+  for(byte i = 0; i < messageLength; i++) {
     byte c = SPI.transfer(0x00);    
 
     if(i > 1) {
