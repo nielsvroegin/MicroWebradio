@@ -53,6 +53,52 @@ void loop() {
 }
 
 /**
+ *  Interrupt method used to get notified about messages of slave
+ */
+void incomingMessage() {  
+  // Show led interrupt has been triggered 
+  if(ledState == LOW) {
+    ledState = HIGH;
+  } else {
+    ledState = LOW;
+  }  
+  digitalWrite(led, ledState);  
+
+  // Receive message
+  digitalWrite(slaveSelectPin,LOW);
+
+  // Ignore 0 and read message type
+  byte messageType;
+  while(messageType == 0x00) {
+    messageType = transferByte(0x00);        
+  }
+  
+  // Read message length
+  int messageLength = SPI.transfer(0x00);      
+  delayMicroseconds(1);
+
+  // Proccess message
+  if (messageType == KEEPALIVE) {
+    readKeepAlive(messageLength);
+  } else if(messageType == LISTACCESSPOINTS) {    
+    readListAccesspoints(messageLength);
+  } else {    
+    Serial.println("Unknown message type received");
+  }
+  
+  digitalWrite(slaveSelectPin,HIGH);
+}
+
+byte transferByte(const byte c) {
+  byte receivedByte = SPI.transfer(c);
+  //delayMicroseconds(1);  
+
+  return receivedByte;
+}
+
+//------------- Send message Functions -------------//
+
+/**
  *  Send Keep Alive to slave 
  */
 void sendKeepAlive(void) {
@@ -87,43 +133,34 @@ void sendListAp() {
   digitalWrite(slaveSelectPin,HIGH);
 }
 
-void incomingMessage() {  
-  const char delay = 1;
-  
-  // Show led interrupt has been triggered 
-  if(ledState == LOW) {
-    ledState = HIGH;
-  } else {
-    ledState = LOW;
-  }  
-  digitalWrite(led, ledState);  
+//------------- Read message Functions -------------//
 
-  // Receive message
-  digitalWrite(slaveSelectPin,LOW);
-
-  char messageType;
-  while(messageType == 0x00) {
-    messageType = SPI.transfer(0x00);
-    delayMicroseconds(delay);
+/**
+ * Read received keep alive message
+ */
+void readKeepAlive(int messageLength) {
+  for(int i = 0; i < messageLength; i++) {
+    char c = transferByte(0x00);
+    Serial.print(c);    
   }
   
-  if(messageType == 2) {
-    int messageLength = SPI.transfer(0x00);
-    delayMicroseconds(delay);    
-    char message[messageLength];
-  
-    for(int i = 0; i < messageLength; i++) {
-      char c = SPI.transfer(0x00);
-      delayMicroseconds(delay);
+  Serial.println();
+}
 
-      if(i > 1) {
-        message[i-2] = c;
-      }
+/**
+ * Read received list accesspoint message
+ */
+void readListAccesspoints(int messageLength) {
+  char message[messageLength];
+  
+  for(int i = 0; i < messageLength; i++) {
+    byte c = transferByte(0x00);    
+
+    if(i > 1) {
+      message[i-2] = c;
     }
-  
-    Serial.println(message);    
   }
 
-  digitalWrite(slaveSelectPin,HIGH);
+  Serial.println(message);  
 }
 
