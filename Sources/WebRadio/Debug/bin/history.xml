@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -g -nostartfiles -Map=WebRadio.map -O0 --gc-sections -LC:\CooCox\CoIDE\configuration\ProgramData\WebRadio -TC:\CooCox\CoIDE\configuration\ProgramData\WebRadio/arm-gcc-link.ld -g">
+      <target file="WebRadio.elf" lastModified="150e28cd81a">
+         <source file="..\obj\semihosting.o" lastModified="150e28cd1f3"/>
+         <source file="..\obj\stm32f4xx_usart.o" lastModified="150e28cd29e"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="150e28cd2dd"/>
+         <source file="..\obj\main.o" lastModified="150e28cd33a"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="150e28cd3b7"/>
+         <source file="..\obj\printf.o" lastModified="150e28cd434"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="150e28cd492"/>
+         <source file="..\obj\sh_cmd.o" lastModified="150e28cd4a1"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="150e28cd4ff"/>
+         <source file="..\obj\syscalls.o" lastModified="150e28cd53d"/>
+         <source file="..\obj\stm32f4xx_dma.o" lastModified="150e28cd5aa"/>
+         <source file="..\obj\esp8266.o" lastModified="150e28cd627"/>
+      </target>
+   </processor>
+</history>
