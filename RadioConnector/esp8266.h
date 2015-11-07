@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 typedef void lineProcessor(unsigned char *);
 
 //------------- Structs -------------//
@@ -30,6 +32,18 @@ bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
 
 // Quit Access Point
 bit esp8266_quitAp(void);
+
+// Enable or disable multiple connection mode
+bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode);
+
+// Opens connect to address on port
+bit esp8266_openConnection(const unsigned char *address, const unsigned char *port);
+
+// Send data to connection
+bit esp8266_sendData(const unsigned char *data);
+
+// Read data send by ESP8266 to maximum of 32 byte
+unsigned char esp8266_readData(unsigned char *data);
 
 //------------- Static Processor Functions -------------//
 

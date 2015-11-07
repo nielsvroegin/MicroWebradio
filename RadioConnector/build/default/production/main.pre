@@ -4956,7 +4956,10 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 1 "esp8266.h"
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdbool.h"
+typedef unsigned char bool;
+
+# 3 "esp8266.h"
 typedef void lineProcessor(unsigned char *);
 
 
@@ -4989,6 +4992,18 @@ bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
 
 
 bit esp8266_quitAp(void);
+
+
+bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode);
+
+
+bit esp8266_openConnection(const unsigned char *address, const unsigned char *port);
+
+
+bit esp8266_sendData(const unsigned char *data);
+
+
+unsigned char esp8266_readData(unsigned char *data);
 
 
 
@@ -5034,6 +5049,9 @@ static void handleMessage(unsigned char messageType);
 static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
 
 
+void spiManager_sendData(const unsigned char *data, const unsigned char length);
+
+
 
 static void handleKeepAlive(unsigned char messageSize);
 
@@ -5041,7 +5059,7 @@ static void handleKeepAlive(unsigned char messageSize);
 static void handleListAccessPoints();
 
 
-# 16 "main.c"
+# 17 "main.c"
 #pragma config OSC = HSPLL
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
@@ -5128,16 +5146,28 @@ setup();
 while(!esp8266_isOnline());
 
 
-static bit res;
-res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
+esp8266_joinAp("UPC1248023", "CHNAJRDQ");
 
-res = esp8266_quitAp();
+
+static bit res;
+res = esp8266_setMultipleConnectionMode(0);
+
+
+res = esp8266_openConnection("192.168.0.150", "80");
+
+res = esp8266_sendData("GET / HTTP/1.1\r\nHost: 192.168.0.150\r\n");
 
 
 LATAbits.LATA0 = 1;
 
 while(1) {
 spiManager_processData();
+
+unsigned char data[32];
+unsigned char dataLength = esp8266_readData(&data);
+if(dataLength > 0) {
+spiManager_sendData(data, dataLength);
+}
 }
 return;
 }

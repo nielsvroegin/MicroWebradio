@@ -7,7 +7,7 @@
 #define MAXACCESSPOINTS 15
 
 //------------- Global Vars -------------//
-CIRCBUF_DEF(receiveBuffer, 32);
+CIRCBUF_DEF(receiveBufferUart, 128);
 
 static unsigned char command[64];
 
@@ -46,7 +46,7 @@ void esp8266_init(void) {
 }
 
 void esp8266_fillBuffer(unsigned char c) {
-    circBufPush(&receiveBuffer, c);
+    circBufPush(&receiveBufferUart, c);
 }
 
 // Check if the module is started
@@ -87,6 +87,70 @@ bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password) {
 // Restart module
 bit esp8266_quitAp(void) {
     return performCommand("AT+CWQAP", NULL);
+}
+
+// Enable or disable multiple connection mode
+bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode) {
+    strcpy(command, "AT+CIPMUX=");
+
+    if(multipleConnectionMode) {    
+        strcat(command, "1");
+    } else {
+        strcat(command, "0");
+    }
+    
+    return performCommand(command, NULL);
+}
+
+// Opens connect to address on port
+bit esp8266_openConnection(const unsigned char *address, const unsigned char *port) {
+    strcpy(command, "AT+CIPSTART=\"TCP\",\"");    
+    strcat(command, address);
+    strcat(command, "\",");
+    strcat(command, port);
+    
+    return performCommand(command, NULL);
+}
+
+// Send data to connection
+bit esp8266_sendData(const unsigned char *data) {
+    // Determine amount of data bytes
+    unsigned int amountOfBytes = strlen(data);
+    
+    // Convert int to string
+    unsigned char amountOfBytesStr[4];
+    itoa(amountOfBytesStr, amountOfBytes, 10);
+    
+    // Create command
+    strcpy(command, "AT+CIPSEND=");
+    strcat(command, amountOfBytesStr);
+    
+    // Check if send request was successful
+    if(!performCommand(command, NULL)) {       
+        return 0;
+    }
+    
+    // Send data
+    return performCommand(data, NULL);
+}
+
+// Read data send by ESP8266 to maximum of 32 byte
+unsigned char esp8266_readData(unsigned char *data) {
+    unsigned char c;
+    unsigned char index = 0;
+    
+    while(circBufPop(&receiveBufferUart, &c)) {
+        *(data + index) = c;
+        
+        index++;
+        
+        // Stop reading data when 32 bytes have been read
+        if(index == 64) {
+            break;
+        }
+    }
+    
+    return index;
 }
 //------------- Static Processor Functions -------------//
 
@@ -130,6 +194,8 @@ static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor)
         readLine(&line);
         
         if(strcmp(line, "OK") == 0) {
+            return 1;
+        } else if(strcmp(line, "SEND OK") == 0) {
             return 1;
         } else if(strcmp(line, "ERROR") == 0) {
             return 0;
@@ -185,7 +251,7 @@ static void putch(unsigned char c) {
 static unsigned char getch(void) {
     unsigned char c;
     
-    while(!circBufPop(&receiveBuffer, &c));
+    while(!circBufPop(&receiveBufferUart, &c));
         
     return c;
 }

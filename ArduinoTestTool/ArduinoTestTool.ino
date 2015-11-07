@@ -5,6 +5,7 @@
 #define LISTACCESSPOINTS 2
 #define JOINACCESSPOINT 3
 #define QUITACCESSPOINT 4
+#define DATA 100
 
 const int slaveSelectPin = 10;
 const int interruptPin = 2;
@@ -96,6 +97,8 @@ void processIncomingMessage() {
     readKeepAlive(messageLength);
   } else if(messageType == LISTACCESSPOINTS) {    
     readListAccesspoints(messageLength);
+  } else if(messageType == DATA) {    
+    readData(messageLength);
   } else {    
     Serial.println("Unknown message type received");
   }
@@ -174,5 +177,17 @@ void readListAccesspoints(byte messageLength) {
   }
 
   Serial.println(message);  
+}
+
+/**
+ * Read plain data
+ */
+void readData(byte messageLength) {
+  for(byte i = 0; i < messageLength; i++) {
+    char c = SPI.transfer(0x00);
+    Serial.print(c);    
+  }
+  
+  //Serial.println();
 }
 

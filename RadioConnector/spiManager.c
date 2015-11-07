@@ -13,6 +13,7 @@
 #define LISTACCESSPOINTS 2
 #define JOINACCESSPOINT 3
 #define QUITACCESSPOINT 4
+#define DATA 100
 
 //------------- Global Vars -------------//
 CIRCBUF_DEF(receiveBuffer, 32);
@@ -88,6 +89,11 @@ void spiManager_sendAccessPoints(unsigned char accessPointsCount, struct AccessP
         
         sendMessage(LISTACCESSPOINTS, (unsigned char *)accessPoint, sizeof(struct AccessPoint));
     }
+}
+
+// Send plain data to master
+void spiManager_sendData(const unsigned char *data, const unsigned char length) {        
+    sendMessage(DATA, data, length);
 }
 
 //------------- Static Functions -------------//

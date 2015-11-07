@@ -1,9 +1,9 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F38 `*uc ~T0 @X0 1 t ]
+[v F48 `*uc ~T0 @X0 1 t ]
 "6 circBuf.h
 [s S2 `C*uc 1 `uc 1 `uc 1 `Cuc 1 ]
 [n S2 . buffer head tail maxLen ]
-"4 esp8266.h
+"6 esp8266.h
 [s S1 `i 1 `uc -> 32 `i `i 1 ]
 [n S1 AccessPoint ecn ssid rssi ]
 "8385 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
@@ -34,61 +34,70 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _RX9 `Vb ~T0 @X0 0 e@32094 ]
 "8445
 [v _TXEN `Vb ~T0 @X0 0 e@32101 ]
-[v F46 `(b ~T0 @X0 1 tf2`*VS2`uc ]
+[v F56 `(b ~T0 @X0 1 tf2`*VS2`uc ]
 "14 circBuf.h
-[v _circBufPush `TF46 ~T0 @X0 0 e ]
-[v F27 `(v ~T0 @X0 1 tf1`*uc ]
-"41 esp8266.h
-[v _performCommand `(b ~T0 @X0 0 sf2`*Cuc`*F27 ]
-"36
+[v _circBufPush `TF56 ~T0 @X0 0 e ]
+[v F37 `(v ~T0 @X0 1 tf1`*uc ]
+"55 esp8266.h
+[v _performCommand `(b ~T0 @X0 0 sf2`*Cuc`*F37 ]
+"50
 [v _processAccessPointLine `(v ~T0 @X0 0 sf1`*uc ]
 "35 C:\Program Files (x86)\Microchip\xc8\v1.35\include\string.h
 [v _strcpy `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
 "34
 [v _strcat `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
-"51
+"54
+[v _strlen `(ui ~T0 @X0 0 ef1`*Cuc ]
+"95 C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdlib.h
+[v _itoa `(*uc ~T0 @X0 0 ef3`*uc`i`i ]
+"58 esp8266.h
+[v _writeLine `(v ~T0 @X0 0 sf1`*Cuc ]
+[v F60 `(b ~T0 @X0 1 tf2`*VS2`*uc ]
+"17 circBuf.h
+[v _circBufPop `TF60 ~T0 @X0 0 e ]
+"51 C:\Program Files (x86)\Microchip\xc8\v1.35\include\string.h
 [v _strstr `(*uc ~T0 @X0 0 ef2`*Cuc`*Cuc ]
 "55 C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdlib.h
 [v _atoi `(i ~T0 @X0 0 ef1`*Cuc ]
 "39 C:\Program Files (x86)\Microchip\xc8\v1.35\include\string.h
 [v _strtok `(*uc ~T0 @X0 0 ef2`*uc`*Cuc ]
-"44 esp8266.h
-[v _writeLine `(v ~T0 @X0 0 sf1`*Cuc ]
-"47
+"61 esp8266.h
 [v _readLine `(v ~T0 @X0 0 sf1`*uc ]
 "43 C:\Program Files (x86)\Microchip\xc8\v1.35\include\string.h
 [v _strcmp `(i ~T0 @X0 0 ef2`*Cuc`*Cuc ]
-"50 esp8266.h
+"64 esp8266.h
 [v _putch `(v ~T0 @X0 0 sf1`uc ]
-"53
+"67
 [v _getch `(uc ~T0 @X0 0 sf ]
 "8451 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4520.h
 [v _TXIF `Vb ~T0 @X0 0 e@31988 ]
 "3862
 [v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
-[v F50 `(b ~T0 @X0 1 tf2`*VS2`*uc ]
-"17 circBuf.h
-[v _circBufPop `TF50 ~T0 @X0 0 e ]
-[; ;esp8266.h: 1: typedef void lineProcessor(unsigned char *);
-[; ;esp8266.h: 4: struct AccessPoint
-[; ;esp8266.h: 5: {
-[; ;esp8266.h: 6: int ecn;
-[; ;esp8266.h: 7: unsigned char ssid[32];
-[; ;esp8266.h: 8: int rssi;
-[; ;esp8266.h: 9: };
-[; ;esp8266.h: 14: void esp8266_init(void);
-[; ;esp8266.h: 17: void esp8266_fillBuffer(unsigned char c);
-[; ;esp8266.h: 20: bit esp8266_isOnline(void);
-[; ;esp8266.h: 23: bit esp8266_restart(void);
-[; ;esp8266.h: 26: struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
-[; ;esp8266.h: 29: bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
-[; ;esp8266.h: 32: bit esp8266_quitAp(void);
-[; ;esp8266.h: 36: static void processAccessPointLine(unsigned char *line);
-[; ;esp8266.h: 41: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor);
-[; ;esp8266.h: 44: static void writeLine(unsigned const char *line);
-[; ;esp8266.h: 47: static void readLine(unsigned char line[50]);
-[; ;esp8266.h: 50: static void putch(unsigned char);
-[; ;esp8266.h: 53: static unsigned char getch(void);
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;esp8266.h: 3: typedef void lineProcessor(unsigned char *);
+[; ;esp8266.h: 6: struct AccessPoint
+[; ;esp8266.h: 7: {
+[; ;esp8266.h: 8: int ecn;
+[; ;esp8266.h: 9: unsigned char ssid[32];
+[; ;esp8266.h: 10: int rssi;
+[; ;esp8266.h: 11: };
+[; ;esp8266.h: 16: void esp8266_init(void);
+[; ;esp8266.h: 19: void esp8266_fillBuffer(unsigned char c);
+[; ;esp8266.h: 22: bit esp8266_isOnline(void);
+[; ;esp8266.h: 25: bit esp8266_restart(void);
+[; ;esp8266.h: 28: struct AccessPoint *esp8266_listAp(unsigned char *amountOfAccessPointsRef);
+[; ;esp8266.h: 31: bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
+[; ;esp8266.h: 34: bit esp8266_quitAp(void);
+[; ;esp8266.h: 37: bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode);
+[; ;esp8266.h: 40: bit esp8266_openConnection(const unsigned char *address, const unsigned char *port);
+[; ;esp8266.h: 43: bit esp8266_sendData(const unsigned char *data);
+[; ;esp8266.h: 46: unsigned char esp8266_readData(unsigned char *data);
+[; ;esp8266.h: 50: static void processAccessPointLine(unsigned char *line);
+[; ;esp8266.h: 55: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor);
+[; ;esp8266.h: 58: static void writeLine(unsigned const char *line);
+[; ;esp8266.h: 61: static void readLine(unsigned char line[50]);
+[; ;esp8266.h: 64: static void putch(unsigned char);
+[; ;esp8266.h: 67: static unsigned char getch(void);
 [; ;circBuf.h: 5: typedef volatile struct
 [; ;circBuf.h: 6: {
 [; ;circBuf.h: 7: unsigned char * const buffer;
@@ -3982,7 +3991,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;esp8266.c: 54: return performCommand("AT", (0));
 "54
-[e ) -> -> ( _performCommand (2 , :s 1C -> -> 0 `i `*F27 `i `b ]
+[e ) -> -> ( _performCommand (2 , :s 1C -> -> 0 `i `*F37 `i `b ]
 [e $UE 409  ]
 [; ;esp8266.c: 55: }
 "55
@@ -3996,7 +4005,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;esp8266.c: 59: return performCommand("AT+RST", (0));
 "59
-[e ) -> -> ( _performCommand (2 , :s 2C -> -> 0 `i `*F27 `i `b ]
+[e ) -> -> ( _performCommand (2 , :s 2C -> -> 0 `i `*F37 `i `b ]
 [e $UE 410  ]
 [; ;esp8266.c: 60: }
 "60
@@ -4051,7 +4060,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _strcat (2 , &U _command :s 6C ]
 [; ;esp8266.c: 84: return performCommand(command, (0));
 "84
-[e ) -> -> ( _performCommand (2 , -> &U _command `*Cuc -> -> 0 `i `*F27 `i `b ]
+[e ) -> -> ( _performCommand (2 , -> &U _command `*Cuc -> -> 0 `i `*F37 `i `b ]
 [e $UE 412  ]
 [; ;esp8266.c: 85: }
 "85
@@ -4065,314 +4074,496 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;esp8266.c: 89: return performCommand("AT+CWQAP", (0));
 "89
-[e ) -> -> ( _performCommand (2 , :s 7C -> -> 0 `i `*F27 `i `b ]
+[e ) -> -> ( _performCommand (2 , :s 7C -> -> 0 `i `*F37 `i `b ]
 [e $UE 413  ]
 [; ;esp8266.c: 90: }
 "90
 [e :UE 413 ]
 }
 "93
+[v _esp8266_setMultipleConnectionMode `(b ~T0 @X0 1 ef1`uc ]
+{
+[; ;esp8266.c: 93: bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode) {
+[e :U _esp8266_setMultipleConnectionMode ]
+[v _multipleConnectionMode `uc ~T0 @X0 1 r1 ]
+[f ]
+[; ;esp8266.c: 94: strcpy(command, "AT+CIPMUX=");
+"94
+[e ( _strcpy (2 , &U _command :s 8C ]
+[; ;esp8266.c: 96: if(multipleConnectionMode) {
+"96
+[e $ ! != -> _multipleConnectionMode `i -> -> -> 0 `i `uc `i 415  ]
+{
+[; ;esp8266.c: 97: strcat(command, "1");
+"97
+[e ( _strcat (2 , &U _command :s 9C ]
+"98
+}
+[; ;esp8266.c: 98: } else {
+[e $U 416  ]
+[e :U 415 ]
+{
+[; ;esp8266.c: 99: strcat(command, "0");
+"99
+[e ( _strcat (2 , &U _command :s 10C ]
+"100
+}
+[e :U 416 ]
+[; ;esp8266.c: 100: }
+[; ;esp8266.c: 102: return performCommand(command, (0));
+"102
+[e ) -> -> ( _performCommand (2 , -> &U _command `*Cuc -> -> 0 `i `*F37 `i `b ]
+[e $UE 414  ]
+[; ;esp8266.c: 103: }
+"103
+[e :UE 414 ]
+}
+"106
+[v _esp8266_openConnection `(b ~T0 @X0 1 ef2`*Cuc`*Cuc ]
+{
+[; ;esp8266.c: 106: bit esp8266_openConnection(const unsigned char *address, const unsigned char *port) {
+[e :U _esp8266_openConnection ]
+[v _address `*Cuc ~T0 @X0 1 r1 ]
+[v _port `*Cuc ~T0 @X0 1 r2 ]
+[f ]
+[; ;esp8266.c: 107: strcpy(command, "AT+CIPSTART=\"TCP\",\"");
+"107
+[e ( _strcpy (2 , &U _command :s 11C ]
+[; ;esp8266.c: 108: strcat(command, address);
+"108
+[e ( _strcat (2 , &U _command _address ]
+[; ;esp8266.c: 109: strcat(command, "\",");
+"109
+[e ( _strcat (2 , &U _command :s 12C ]
+[; ;esp8266.c: 110: strcat(command, port);
+"110
+[e ( _strcat (2 , &U _command _port ]
+[; ;esp8266.c: 112: return performCommand(command, (0));
+"112
+[e ) -> -> ( _performCommand (2 , -> &U _command `*Cuc -> -> 0 `i `*F37 `i `b ]
+[e $UE 417  ]
+[; ;esp8266.c: 113: }
+"113
+[e :UE 417 ]
+}
+"116
+[v _esp8266_sendData `(b ~T0 @X0 1 ef1`*Cuc ]
+{
+[; ;esp8266.c: 116: bit esp8266_sendData(const unsigned char *data) {
+[e :U _esp8266_sendData ]
+[v _data `*Cuc ~T0 @X0 1 r1 ]
+[f ]
+"118
+[v _amountOfBytes `ui ~T0 @X0 1 a ]
+[; ;esp8266.c: 118: unsigned int amountOfBytes = strlen(data);
+[e = _amountOfBytes ( _strlen (1 _data ]
+"121
+[v _amountOfBytesStr `uc ~T0 @X0 -> 4 `i a ]
+[; ;esp8266.c: 121: unsigned char amountOfBytesStr[4];
+[; ;esp8266.c: 122: itoa(amountOfBytesStr, amountOfBytes, 10);
+"122
+[e ( _itoa (3 , , &U _amountOfBytesStr -> _amountOfBytes `i -> 10 `i ]
+[; ;esp8266.c: 125: strcpy(command, "AT+CIPSEND=");
+"125
+[e ( _strcpy (2 , &U _command :s 13C ]
+[; ;esp8266.c: 126: strcat(command, amountOfBytesStr);
+"126
+[e ( _strcat (2 , &U _command -> &U _amountOfBytesStr `*Cuc ]
+[; ;esp8266.c: 129: if(!performCommand(command, (0))) {
+"129
+[e $ ! ! ( _performCommand (2 , -> &U _command `*Cuc -> -> 0 `i `*F37 419  ]
+{
+[; ;esp8266.c: 130: return 0;
+"130
+[e ) -> -> 0 `i `b ]
+[e $UE 418  ]
+"131
+}
+[e :U 419 ]
+[; ;esp8266.c: 131: }
+[; ;esp8266.c: 134: writeLine(data);
+"134
+[e ( _writeLine (1 _data ]
+[; ;esp8266.c: 136: return 1;
+"136
+[e ) -> -> 1 `i `b ]
+[e $UE 418  ]
+[; ;esp8266.c: 137: }
+"137
+[e :UE 418 ]
+}
+"140
+[v _esp8266_readData `(uc ~T0 @X0 1 ef1`*uc ]
+{
+[; ;esp8266.c: 140: unsigned char esp8266_readData(unsigned char *data) {
+[e :U _esp8266_readData ]
+[v _data `*uc ~T0 @X0 1 r1 ]
+[f ]
+"141
+[v _c `uc ~T0 @X0 1 a ]
+"142
+[v _index `ui ~T0 @X0 1 a ]
+[; ;esp8266.c: 141: unsigned char c;
+[; ;esp8266.c: 142: unsigned index = 0;
+[e = _index -> -> 0 `i `ui ]
+[; ;esp8266.c: 144: while(circBufPop(&receiveBuffer, &c)) {
+"144
+[e $U 421  ]
+[e :U 422 ]
+{
+[; ;esp8266.c: 145: *(data + index) = c;
+"145
+[e = *U + _data * -> _index `ux -> -> # *U _data `ui `ux _c ]
+[; ;esp8266.c: 147: index++;
+"147
+[e ++ _index -> -> 1 `i `ui ]
+[; ;esp8266.c: 150: if(index == 32) {
+"150
+[e $ ! == _index -> -> 32 `i `ui 424  ]
+{
+[; ;esp8266.c: 151: break;
+"151
+[e $U 423  ]
+"152
+}
+[e :U 424 ]
+"153
+}
+[e :U 421 ]
+"144
+[e $ ( _circBufPop (2 , &U _receiveBuffer &U _c 422  ]
+[e :U 423 ]
+[; ;esp8266.c: 152: }
+[; ;esp8266.c: 153: }
+[; ;esp8266.c: 155: return index;
+"155
+[e ) -> _index `uc ]
+[e $UE 420  ]
+[; ;esp8266.c: 156: }
+"156
+[e :UE 420 ]
+}
+"159
 [v _processAccessPointLine `(v ~T0 @X0 1 sf1`*uc ]
 {
-[; ;esp8266.c: 93: static void processAccessPointLine(unsigned char *line){
+[; ;esp8266.c: 159: static void processAccessPointLine(unsigned char *line){
 [e :U _processAccessPointLine ]
 [v _line `*uc ~T0 @X0 1 r1 ]
 [f ]
-"94
+"160
 [v _parsedData `*uc ~T0 @X0 1 a ]
-[; ;esp8266.c: 94: unsigned char *parsedData;
-[; ;esp8266.c: 97: if(amountOfAccessPoints == 15) {
-"97
-[e $ ! == -> _amountOfAccessPoints `i -> 15 `i 415  ]
+[; ;esp8266.c: 160: unsigned char *parsedData;
+[; ;esp8266.c: 163: if(amountOfAccessPoints == 15) {
+"163
+[e $ ! == -> _amountOfAccessPoints `i -> 15 `i 426  ]
 {
-[; ;esp8266.c: 98: return;
-"98
-[e $UE 414  ]
-"99
-}
-[e :U 415 ]
-[; ;esp8266.c: 99: }
-[; ;esp8266.c: 102: parsedData = strstr(line, "+CWLAP:(");
-"102
-[e = _parsedData ( _strstr (2 , -> _line `*Cuc :s 8C ]
-[; ;esp8266.c: 103: if(parsedData == (0))
-"103
-[e $ ! == _parsedData -> -> 0 `i `*uc 416  ]
-[; ;esp8266.c: 104: return;
-"104
-[e $UE 414  ]
-[e :U 416 ]
-[; ;esp8266.c: 107: parsedData += 8;
-"107
-[e =+ _parsedData * -> -> 8 `i `x -> -> # *U _parsedData `i `x ]
-[; ;esp8266.c: 110: accessPoints[amountOfAccessPoints].ecn = atoi(strtok(parsedData,","));
-"110
-[e = . *U + &U _accessPoints * -> _amountOfAccessPoints `ux -> -> # *U &U _accessPoints `ui `ux 0 ( _atoi (1 -> ( _strtok (2 , _parsedData :s 9C `*Cuc ]
-[; ;esp8266.c: 111: strcpy(accessPoints[amountOfAccessPoints].ssid, strtok((0),",\""));
-"111
-[e ( _strcpy (2 , &U . *U + &U _accessPoints * -> _amountOfAccessPoints `ux -> -> # *U &U _accessPoints `ui `ux 1 -> ( _strtok (2 , -> -> 0 `i `*uc :s 10C `*Cuc ]
-[; ;esp8266.c: 112: accessPoints[amountOfAccessPoints].rssi = atoi(strtok((0),","));
-"112
-[e = . *U + &U _accessPoints * -> _amountOfAccessPoints `ux -> -> # *U &U _accessPoints `ui `ux 2 ( _atoi (1 -> ( _strtok (2 , -> -> 0 `i `*uc :s 11C `*Cuc ]
-[; ;esp8266.c: 115: amountOfAccessPoints++;
-"115
-[e ++ _amountOfAccessPoints -> -> 1 `i `uc ]
-[; ;esp8266.c: 116: }
-"116
-[e :UE 414 ]
-}
-"123
-[v _performCommand `(b ~T0 @X0 1 sf2`*Cuc`*F27 ]
-{
-[; ;esp8266.c: 123: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor) {
-[e :U _performCommand ]
-[v _cmd `*Cuc ~T0 @X0 1 r1 ]
-[v F4370 `(v ~T0 @X0 1 tf1`*uc ]
-[v _lineProcessor `*F4370 ~T0 @X0 1 r2 ]
-[f ]
-[; ;esp8266.c: 125: writeLine(cmd);
-"125
-[e ( _writeLine (1 _cmd ]
-[; ;esp8266.c: 128: while(1) {
-"128
-[e :U 419 ]
-{
-"129
-[v _line `uc ~T0 @X0 -> 50 `i a ]
-[; ;esp8266.c: 129: unsigned char line[50];
-[; ;esp8266.c: 130: readLine(&line);
-"130
-[e ( _readLine (1 &U _line ]
-[; ;esp8266.c: 132: if(strcmp(line, "OK") == 0) {
-"132
-[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 12C -> 0 `i 421  ]
-{
-[; ;esp8266.c: 133: return 1;
-"133
-[e ) -> -> 1 `i `b ]
-[e $UE 417  ]
-"134
-}
-[; ;esp8266.c: 134: } else if(strcmp(line, "ERROR") == 0) {
-[e $U 422  ]
-[e :U 421 ]
-[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 13C -> 0 `i 423  ]
-{
-[; ;esp8266.c: 135: return 0;
-"135
-[e ) -> -> 0 `i `b ]
-[e $UE 417  ]
-"136
-}
-[; ;esp8266.c: 136: } else if(strcmp(line, "FAIL") == 0) {
-[e $U 424  ]
-[e :U 423 ]
-[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 14C -> 0 `i 425  ]
-{
-[; ;esp8266.c: 137: return 0;
-"137
-[e ) -> -> 0 `i `b ]
-[e $UE 417  ]
-"138
-}
-[; ;esp8266.c: 138: } else {
-[e $U 426  ]
-[e :U 425 ]
-{
-[; ;esp8266.c: 140: if(lineProcessor != (0)) {
-"140
-[e $ ! != _lineProcessor -> -> 0 `i `*F4370 427  ]
-{
-[; ;esp8266.c: 141: lineProcessor(line);
-"141
-[e ( *U _lineProcessor (1 &U _line ]
-"142
-}
-[e :U 427 ]
-"143
+[; ;esp8266.c: 164: return;
+"164
+[e $UE 425  ]
+"165
 }
 [e :U 426 ]
-[e :U 424 ]
-[e :U 422 ]
-"144
+[; ;esp8266.c: 165: }
+[; ;esp8266.c: 168: parsedData = strstr(line, "+CWLAP:(");
+"168
+[e = _parsedData ( _strstr (2 , -> _line `*Cuc :s 14C ]
+[; ;esp8266.c: 169: if(parsedData == (0))
+"169
+[e $ ! == _parsedData -> -> 0 `i `*uc 427  ]
+[; ;esp8266.c: 170: return;
+"170
+[e $UE 425  ]
+[e :U 427 ]
+[; ;esp8266.c: 173: parsedData += 8;
+"173
+[e =+ _parsedData * -> -> 8 `i `x -> -> # *U _parsedData `i `x ]
+[; ;esp8266.c: 176: accessPoints[amountOfAccessPoints].ecn = atoi(strtok(parsedData,","));
+"176
+[e = . *U + &U _accessPoints * -> _amountOfAccessPoints `ux -> -> # *U &U _accessPoints `ui `ux 0 ( _atoi (1 -> ( _strtok (2 , _parsedData :s 15C `*Cuc ]
+[; ;esp8266.c: 177: strcpy(accessPoints[amountOfAccessPoints].ssid, strtok((0),",\""));
+"177
+[e ( _strcpy (2 , &U . *U + &U _accessPoints * -> _amountOfAccessPoints `ux -> -> # *U &U _accessPoints `ui `ux 1 -> ( _strtok (2 , -> -> 0 `i `*uc :s 16C `*Cuc ]
+[; ;esp8266.c: 178: accessPoints[amountOfAccessPoints].rssi = atoi(strtok((0),","));
+"178
+[e = . *U + &U _accessPoints * -> _amountOfAccessPoints `ux -> -> # *U &U _accessPoints `ui `ux 2 ( _atoi (1 -> ( _strtok (2 , -> -> 0 `i `*uc :s 17C `*Cuc ]
+[; ;esp8266.c: 181: amountOfAccessPoints++;
+"181
+[e ++ _amountOfAccessPoints -> -> 1 `i `uc ]
+[; ;esp8266.c: 182: }
+"182
+[e :UE 425 ]
 }
-[e :U 418 ]
-"128
-[e $U 419  ]
-[e :U 420 ]
-[; ;esp8266.c: 142: }
-[; ;esp8266.c: 143: }
-[; ;esp8266.c: 144: }
-[; ;esp8266.c: 146: return 0;
-"146
-[e ) -> -> 0 `i `b ]
-[e $UE 417  ]
-[; ;esp8266.c: 147: }
-"147
-[e :UE 417 ]
-}
-"149
-[v _writeLine `(v ~T0 @X0 1 sf1`*Cuc ]
+"189
+[v _performCommand `(b ~T0 @X0 1 sf2`*Cuc`*F37 ]
 {
-[; ;esp8266.c: 149: static void writeLine(unsigned const char *line) {
-[e :U _writeLine ]
-[v _line `*Cuc ~T0 @X0 1 r1 ]
+[; ;esp8266.c: 189: static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor) {
+[e :U _performCommand ]
+[v _cmd `*Cuc ~T0 @X0 1 r1 ]
+[v F4389 `(v ~T0 @X0 1 tf1`*uc ]
+[v _lineProcessor `*F4389 ~T0 @X0 1 r2 ]
 [f ]
-[; ;esp8266.c: 150: while (*line != 0) {
-"150
-[e $U 429  ]
+[; ;esp8266.c: 191: writeLine(cmd);
+"191
+[e ( _writeLine (1 _cmd ]
+[; ;esp8266.c: 194: while(1) {
+"194
 [e :U 430 ]
 {
-[; ;esp8266.c: 151: putch(*line++);
-"151
-[e ( _putch (1 *U ++ _line * -> -> 1 `i `x -> -> # *U _line `i `x ]
-"152
+"195
+[v _line `uc ~T0 @X0 -> 50 `i a ]
+[; ;esp8266.c: 195: unsigned char line[50];
+[; ;esp8266.c: 196: readLine(&line);
+"196
+[e ( _readLine (1 &U _line ]
+[; ;esp8266.c: 198: if(strcmp(line, "OK") == 0) {
+"198
+[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 18C -> 0 `i 432  ]
+{
+[; ;esp8266.c: 199: return 1;
+"199
+[e ) -> -> 1 `i `b ]
+[e $UE 428  ]
+"200
 }
-[e :U 429 ]
-"150
-[e $ != -> *U _line `i -> 0 `i 430  ]
-[e :U 431 ]
-[; ;esp8266.c: 152: }
-[; ;esp8266.c: 153: putch('\r');
-"153
-[e ( _putch (1 -> -> 13 `ui `uc ]
-[; ;esp8266.c: 154: putch('\n');
-"154
-[e ( _putch (1 -> -> 10 `ui `uc ]
-[; ;esp8266.c: 155: }
-"155
-[e :UE 428 ]
+[; ;esp8266.c: 200: } else if(strcmp(line, ">") == 0) {
+[e $U 433  ]
+[e :U 432 ]
+[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 19C -> 0 `i 434  ]
+{
+[; ;esp8266.c: 201: return 1;
+"201
+[e ) -> -> 1 `i `b ]
+[e $UE 428  ]
+"202
 }
-"158
-[v _readLine `(v ~T0 @X0 1 sf1`*uc ]
+[; ;esp8266.c: 202: } else if(strcmp(line, "ERROR") == 0) {
+[e $U 435  ]
+[e :U 434 ]
+[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 20C -> 0 `i 436  ]
 {
-[; ;esp8266.c: 158: static void readLine(unsigned char line[50]) {
-[e :U _readLine ]
-[v _line `*uc ~T0 @X0 1 r1 ]
-[f ]
-[; ;esp8266.c: 160: for(unsigned char charCnt = 0; charCnt < 50; charCnt++) {
-"160
-{
-[v _charCnt `uc ~T0 @X0 1 a ]
-[e = _charCnt -> -> 0 `i `uc ]
-[e $ < -> _charCnt `i -> 50 `i 433  ]
-[e $U 434  ]
-[e :U 433 ]
-{
-"161
-[v _c `uc ~T0 @X0 1 a ]
-[; ;esp8266.c: 161: unsigned char c = getch();
-[e = _c ( _getch ..  ]
-[; ;esp8266.c: 163: if(c == '\n') {
-"163
-[e $ ! == -> _c `ui -> 10 `ui 436  ]
-{
-[; ;esp8266.c: 164: line[charCnt] = '\0';
-"164
-[e = *U + _line * -> _charCnt `ux -> -> # *U _line `ui `ux -> -> 0 `ui `uc ]
-[; ;esp8266.c: 165: return;
-"165
-[e $UE 432  ]
-"166
+[; ;esp8266.c: 203: return 0;
+"203
+[e ) -> -> 0 `i `b ]
+[e $UE 428  ]
+"204
 }
-[; ;esp8266.c: 166: } else if (c == '\r') {
+[; ;esp8266.c: 204: } else if(strcmp(line, "FAIL") == 0) {
 [e $U 437  ]
 [e :U 436 ]
-[e $ ! == -> _c `ui -> 13 `ui 438  ]
+[e $ ! == ( _strcmp (2 , -> &U _line `*Cuc :s 21C -> 0 `i 438  ]
 {
-[; ;esp8266.c: 167: line[charCnt] = '\0';
-"167
-[e = *U + _line * -> _charCnt `ux -> -> # *U _line `ui `ux -> -> 0 `ui `uc ]
-"168
+[; ;esp8266.c: 205: return 0;
+"205
+[e ) -> -> 0 `i `b ]
+[e $UE 428  ]
+"206
 }
-[; ;esp8266.c: 168: } else {
+[; ;esp8266.c: 206: } else {
 [e $U 439  ]
 [e :U 438 ]
 {
-[; ;esp8266.c: 169: line[charCnt] = c;
-"169
-[e = *U + _line * -> _charCnt `ux -> -> # *U _line `ui `ux _c ]
-"170
+[; ;esp8266.c: 208: if(lineProcessor != (0)) {
+"208
+[e $ ! != _lineProcessor -> -> 0 `i `*F4389 440  ]
+{
+[; ;esp8266.c: 209: lineProcessor(line);
+"209
+[e ( *U _lineProcessor (1 &U _line ]
+"210
+}
+[e :U 440 ]
+"211
 }
 [e :U 439 ]
 [e :U 437 ]
-"171
+[e :U 435 ]
+[e :U 433 ]
+"212
 }
-"160
+[e :U 429 ]
+"194
+[e $U 430  ]
+[e :U 431 ]
+[; ;esp8266.c: 210: }
+[; ;esp8266.c: 211: }
+[; ;esp8266.c: 212: }
+[; ;esp8266.c: 214: return 0;
+"214
+[e ) -> -> 0 `i `b ]
+[e $UE 428  ]
+[; ;esp8266.c: 215: }
+"215
+[e :UE 428 ]
+}
+"217
+[v _writeLine `(v ~T0 @X0 1 sf1`*Cuc ]
+{
+[; ;esp8266.c: 217: static void writeLine(unsigned const char *line) {
+[e :U _writeLine ]
+[v _line `*Cuc ~T0 @X0 1 r1 ]
+[f ]
+[; ;esp8266.c: 218: while (*line != 0) {
+"218
+[e $U 442  ]
+[e :U 443 ]
+{
+[; ;esp8266.c: 219: putch(*line++);
+"219
+[e ( _putch (1 *U ++ _line * -> -> 1 `i `x -> -> # *U _line `i `x ]
+"220
+}
+[e :U 442 ]
+"218
+[e $ != -> *U _line `i -> 0 `i 443  ]
+[e :U 444 ]
+[; ;esp8266.c: 220: }
+[; ;esp8266.c: 221: putch('\r');
+"221
+[e ( _putch (1 -> -> 13 `ui `uc ]
+[; ;esp8266.c: 222: putch('\n');
+"222
+[e ( _putch (1 -> -> 10 `ui `uc ]
+[; ;esp8266.c: 223: }
+"223
+[e :UE 441 ]
+}
+"226
+[v _readLine `(v ~T0 @X0 1 sf1`*uc ]
+{
+[; ;esp8266.c: 226: static void readLine(unsigned char line[50]) {
+[e :U _readLine ]
+[v _line `*uc ~T0 @X0 1 r1 ]
+[f ]
+[; ;esp8266.c: 228: for(unsigned char charCnt = 0; charCnt < 50; charCnt++) {
+"228
+{
+[v _charCnt `uc ~T0 @X0 1 a ]
+[e = _charCnt -> -> 0 `i `uc ]
+[e $ < -> _charCnt `i -> 50 `i 446  ]
+[e $U 447  ]
+[e :U 446 ]
+{
+"229
+[v _c `uc ~T0 @X0 1 a ]
+[; ;esp8266.c: 229: unsigned char c = getch();
+[e = _c ( _getch ..  ]
+[; ;esp8266.c: 231: if(c == '\n') {
+"231
+[e $ ! == -> _c `ui -> 10 `ui 449  ]
+{
+[; ;esp8266.c: 232: line[charCnt] = '\0';
+"232
+[e = *U + _line * -> _charCnt `ux -> -> # *U _line `ui `ux -> -> 0 `ui `uc ]
+[; ;esp8266.c: 233: return;
+"233
+[e $UE 445  ]
+"234
+}
+[; ;esp8266.c: 234: } else if (c == '\r') {
+[e $U 450  ]
+[e :U 449 ]
+[e $ ! == -> _c `ui -> 13 `ui 451  ]
+{
+[; ;esp8266.c: 235: line[charCnt] = '\0';
+"235
+[e = *U + _line * -> _charCnt `ux -> -> # *U _line `ui `ux -> -> 0 `ui `uc ]
+"236
+}
+[; ;esp8266.c: 236: } else {
+[e $U 452  ]
+[e :U 451 ]
+{
+[; ;esp8266.c: 237: line[charCnt] = c;
+"237
+[e = *U + _line * -> _charCnt `ux -> -> # *U _line `ui `ux _c ]
+"238
+}
+[e :U 452 ]
+[e :U 450 ]
+"239
+}
+"228
 [e ++ _charCnt -> -> 1 `i `uc ]
-[e $ < -> _charCnt `i -> 50 `i 433  ]
-[e :U 434 ]
-"171
+[e $ < -> _charCnt `i -> 50 `i 446  ]
+[e :U 447 ]
+"239
 }
-[; ;esp8266.c: 170: }
-[; ;esp8266.c: 171: }
-[; ;esp8266.c: 173: line[49] = '\0';
-"173
+[; ;esp8266.c: 238: }
+[; ;esp8266.c: 239: }
+[; ;esp8266.c: 241: line[49] = '\0';
+"241
 [e = *U + _line * -> -> 49 `i `x -> -> # *U _line `i `x -> -> 0 `ui `uc ]
-[; ;esp8266.c: 174: return;
-"174
-[e $UE 432  ]
-[; ;esp8266.c: 175: }
-"175
-[e :UE 432 ]
+[; ;esp8266.c: 242: return;
+"242
+[e $UE 445  ]
+[; ;esp8266.c: 243: }
+"243
+[e :UE 445 ]
 }
-"178
+"246
 [v _putch `(v ~T0 @X0 1 sf1`uc ]
 {
-[; ;esp8266.c: 178: static void putch(unsigned char c) {
+[; ;esp8266.c: 246: static void putch(unsigned char c) {
 [e :U _putch ]
 [v _c `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;esp8266.c: 179: while(!TXIF) continue;
-"179
-[e $U 441  ]
-[e :U 442 ]
-[e $U 441  ]
-[e :U 441 ]
-[e $ ! _TXIF 442  ]
-[e :U 443 ]
-[; ;esp8266.c: 181: TXREG = c;
-"181
+[; ;esp8266.c: 247: while(!TXIF) continue;
+"247
+[e $U 454  ]
+[e :U 455 ]
+[e $U 454  ]
+[e :U 454 ]
+[e $ ! _TXIF 455  ]
+[e :U 456 ]
+[; ;esp8266.c: 249: TXREG = c;
+"249
 [e = _TXREG _c ]
-[; ;esp8266.c: 182: }
-"182
-[e :UE 440 ]
+[; ;esp8266.c: 250: }
+"250
+[e :UE 453 ]
 }
-"185
+"253
 [v _getch `(uc ~T0 @X0 1 sf ]
 {
-[; ;esp8266.c: 185: static unsigned char getch(void) {
+[; ;esp8266.c: 253: static unsigned char getch(void) {
 [e :U _getch ]
 [f ]
-"186
+"254
 [v _c `uc ~T0 @X0 1 a ]
-[; ;esp8266.c: 186: unsigned char c;
-[; ;esp8266.c: 188: while(!circBufPop(&receiveBuffer, &c));
-"188
-[e $U 445  ]
-[e :U 446 ]
-[e :U 445 ]
-[e $ ! ( _circBufPop (2 , &U _receiveBuffer &U _c 446  ]
-[e :U 447 ]
-[; ;esp8266.c: 190: return c;
-"190
+[; ;esp8266.c: 254: unsigned char c;
+[; ;esp8266.c: 256: while(!circBufPop(&receiveBuffer, &c));
+"256
+[e $U 458  ]
+[e :U 459 ]
+[e :U 458 ]
+[e $ ! ( _circBufPop (2 , &U _receiveBuffer &U _c 459  ]
+[e :U 460 ]
+[; ;esp8266.c: 258: return c;
+"258
 [e ) _c ]
-[e $UE 444  ]
-[; ;esp8266.c: 191: }
-"191
-[e :UE 444 ]
+[e $UE 457  ]
+[; ;esp8266.c: 259: }
+"259
+[e :UE 457 ]
 }
 [a 2C 65 84 43 82 83 84 0 ]
 [a 1C 65 84 0 ]
-[a 13C 69 82 82 79 82 0 ]
+[a 20C 69 82 82 79 82 0 ]
 [a 7C 65 84 43 67 87 81 65 80 0 ]
 [a 3C 65 84 43 67 87 76 65 80 0 ]
-[a 14C 70 65 73 76 0 ]
-[a 12C 79 75 0 ]
-[a 9C 44 0 ]
-[a 11C 44 0 ]
-[a 8C 43 67 87 76 65 80 58 40 0 ]
+[a 21C 70 65 73 76 0 ]
+[a 18C 79 75 0 ]
+[a 19C 62 0 ]
+[a 8C 65 84 43 67 73 80 77 85 88 61 0 ]
+[a 13C 65 84 43 67 73 80 83 69 78 68 61 0 ]
+[a 9C 49 0 ]
+[a 10C 48 0 ]
+[a 12C 34 44 0 ]
+[a 15C 44 0 ]
+[a 17C 44 0 ]
+[a 14C 43 67 87 76 65 80 58 40 0 ]
 [a 4C 65 84 43 67 87 74 65 80 61 34 0 ]
+[a 11C 65 84 43 67 73 80 83 84 65 82 84 61 34 84 67 80 34 44 34 0 ]
 [a 5C 34 44 34 0 ]
-[a 10C 44 34 0 ]
+[a 16C 44 34 0 ]
 [a 6C 34 0 ]

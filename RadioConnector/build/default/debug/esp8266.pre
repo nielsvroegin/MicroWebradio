@@ -1,7 +1,10 @@
 
 # 1 "esp8266.c"
 
-# 1 "esp8266.h"
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdbool.h"
+typedef unsigned char bool;
+
+# 3 "esp8266.h"
 typedef void lineProcessor(unsigned char *);
 
 
@@ -34,6 +37,18 @@ bit esp8266_joinAp(const unsigned char *ssid, const unsigned char *password);
 
 
 bit esp8266_quitAp(void);
+
+
+bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode);
+
+
+bit esp8266_openConnection(const unsigned char *address, const unsigned char *port);
+
+
+bit esp8266_sendData(const unsigned char *data);
+
+
+unsigned char esp8266_readData(unsigned char *data);
 
 
 
@@ -5119,7 +5134,7 @@ extern char * ultoa(char * buf, unsigned long val, int base);
 extern char * ftoa(float f, int * status);
 
 # 10 "esp8266.c"
-unsigned char receiveBuffer_space[32]; circBuf_t receiveBuffer = { receiveBuffer_space,0,0,32};
+unsigned char receiveBufferUart_space[128]; circBuf_t receiveBufferUart = { receiveBufferUart_space,0,0,128};
 
 static unsigned char command[64];
 
@@ -5153,7 +5168,7 @@ TXEN = 1;
 }
 
 void esp8266_fillBuffer(unsigned char c) {
-circBufPush(&receiveBuffer, c);
+circBufPush(&receiveBufferUart, c);
 }
 
 
@@ -5197,6 +5212,70 @@ return performCommand("AT+CWQAP", (0));
 }
 
 
+bit esp8266_setMultipleConnectionMode(bool multipleConnectionMode) {
+strcpy(command, "AT+CIPMUX=");
+
+if(multipleConnectionMode) {
+strcat(command, "1");
+} else {
+strcat(command, "0");
+}
+
+return performCommand(command, (0));
+}
+
+
+bit esp8266_openConnection(const unsigned char *address, const unsigned char *port) {
+strcpy(command, "AT+CIPSTART=\"TCP\",\"");
+strcat(command, address);
+strcat(command, "\",");
+strcat(command, port);
+
+return performCommand(command, (0));
+}
+
+
+bit esp8266_sendData(const unsigned char *data) {
+
+unsigned int amountOfBytes = strlen(data);
+
+
+unsigned char amountOfBytesStr[4];
+itoa(amountOfBytesStr, amountOfBytes, 10);
+
+
+strcpy(command, "AT+CIPSEND=");
+strcat(command, amountOfBytesStr);
+
+
+if(!performCommand(command, (0))) {
+return 0;
+}
+
+
+return performCommand(data, (0));
+}
+
+
+unsigned char esp8266_readData(unsigned char *data) {
+unsigned char c;
+unsigned char index = 0;
+
+while(circBufPop(&receiveBufferUart, &c)) {
+*(data + index) = c;
+
+index++;
+
+
+if(index == 64) {
+break;
+}
+}
+
+return index;
+}
+
+
 static void processAccessPointLine(unsigned char *line){
 unsigned char *parsedData;
 
@@ -5222,7 +5301,7 @@ accessPoints[amountOfAccessPoints].rssi = atoi(strtok((0),","));
 amountOfAccessPoints++;
 }
 
-# 123
+# 187
 static bit performCommand(unsigned const char *cmd, lineProcessor lineProcessor) {
 
 writeLine(cmd);
@@ -5233,6 +5312,8 @@ unsigned char line[50];
 readLine(&line);
 
 if(strcmp(line, "OK") == 0) {
+return 1;
+} else if(strcmp(line, "SEND OK") == 0) {
 return 1;
 } else if(strcmp(line, "ERROR") == 0) {
 return 0;
@@ -5288,7 +5369,7 @@ TXREG = c;
 static unsigned char getch(void) {
 unsigned char c;
 
-while(!circBufPop(&receiveBuffer, &c));
+while(!circBufPop(&receiveBufferUart, &c));
 
 return c;
 }

@@ -22,6 +22,9 @@ static void handleMessage(unsigned char messageType);
 // Send message to master
 static void sendMessage(const unsigned char messageType, const unsigned char *message, const unsigned char messageLength);
 
+// Send plain data to master
+void spiManager_sendData(const unsigned char *data, const unsigned char length);
+
 //------------- Handle message funtions (Static Functions) -------------//
 // Handle keep alive message
 static void handleKeepAlive(unsigned char messageSize);

@@ -9,6 +9,7 @@
 
 #include "main.h"
 #include <xc.h>
+#include <stdbool.h>
 #include "esp8266.h"
 #include "spiManager.h"
 
@@ -98,17 +99,31 @@ void main(void) {
     // Check if ESP8266 is started
     while(!esp8266_isOnline());
     
-    // Join AP
+    // Join AP    
+    esp8266_joinAp("UPC1248023", "CHNAJRDQ");  
+
+    // Set to single connection
     static bit res;
-    res = esp8266_joinAp("UPC1248023", "CHNAJRDQ");
-   
-    res = esp8266_quitAp();
+    res = esp8266_setMultipleConnectionMode(false);
+    
+    // Open connection
+    res = esp8266_openConnection("google.nl", "80");
+    
+    res = esp8266_sendData("GET / HTTP/1.1\r\nHost: google.nl\r\n\r\n");
     
     // LED ON    
     LATAbits.LATA0 = 1; 
     
     while(1) {        
         spiManager_processData();
+        
+        msdelay(2000);
+        
+        unsigned char data[64];  
+        unsigned char dataLength = esp8266_readData(&data);
+        if(dataLength > 0) {
+            spiManager_sendData(data, dataLength);
+        }
     }
     return;
 }
