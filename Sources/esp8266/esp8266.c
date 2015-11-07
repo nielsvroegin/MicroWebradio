@@ -134,7 +134,7 @@ unsigned char esp8266_readData(char *data) {
 	unsigned char index = 0;
 
 	// Wait until data available in buffer
-	while(receiveBufferTail != (RECEIVE_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA2_Stream2))) {
+	while(receiveBufferTail != (RECEIVE_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream5))) {
 		// Reset when at end of buffer
 		if(receiveBufferTail == RECEIVE_BUFFER_SIZE) {
 			receiveBufferTail = 0;
@@ -252,19 +252,19 @@ static void readLine(char *line) {
 
 // Put character to ESP866
 static void putch(char c) {
-	while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+	while (USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET);
 
 	PrintChar(c);
 
-	USART_SendData(USART1, c);
+	USART_SendData(USART2, c);
 }
 
 // Read character from ESP866
 static char getch(void) {
 	// Wait until data available in buffer
-	uint16_t freeUnits = DMA_GetCurrDataCounter(DMA2_Stream2);
+	uint16_t freeUnits = DMA_GetCurrDataCounter(DMA1_Stream5);
     while(receiveBufferTail == (RECEIVE_BUFFER_SIZE - freeUnits)) {
-    	freeUnits = DMA_GetCurrDataCounter(DMA2_Stream2);
+    	freeUnits = DMA_GetCurrDataCounter(DMA1_Stream5);
     }
 
     // Reset when at end of buffer
