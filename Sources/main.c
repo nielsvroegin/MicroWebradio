@@ -1,28 +1,41 @@
-#include "stm32f4xx_rcc.h"
-#include "stm32f4xx_gpio.h"
-#include "stm32f4xx_usart.h"
-#include "stm32f4xx_dma.h"
+#include "stm32f4xx_conf.h"
 #include "esp8266.h"
+#include "Audio.h"
+#include "mp3dec.h"
 
-// Prototypes
+#define MP3_SIZE	687348
+
+// Private variables
+MP3FrameInfo mp3FrameInfo;
+HMP3Decoder hMP3Decoder;
+
+// Private function Prototypes
 void GPIOInitialize(void);
-void UART_Initialize(void);
-void DMA_Initialize(void);
+static void AudioCallback(void *context,int buffer);
 
-// Global vars
-GPIO_InitTypeDef GPIOD_InitStruct;
-GPIO_InitTypeDef GPIOC_InitStruct;
-USART_InitTypeDef USART_InitStructure;
-DMA_InitTypeDef  DMA_InitStructure;
+// External variables
+extern const char mp3_data[];
 
 int main(void)
 {
+	// Initialize GPIO
 	GPIOInitialize();
-	UART_Initialize();
-	DMA_Initialize();
+
+	// Initialize ESP8266
+	esp8266_init();
+
+
+	// Play mp3
+	hMP3Decoder = MP3InitDecoder();
+	InitializeAudio(Audio44100HzSettings);
+	SetAudioVolume(0xCF);
+	PlayAudioWithCallback(AudioCallback, 0);
+
+	while(1);
+
 
 	// Delay to be sure Esp8266 is online
-	static int i = 0;
+	/*static int i = 0;
 	for (i = 0; i < 10000000; ++i);
 
 	// Check if ESP8266 is started
@@ -46,10 +59,12 @@ int main(void)
 	while (1) {
 		char data[64];
 		esp8266_readData(data);
-	}
+	}*/
 }
 
 void GPIOInitialize(void) {
+	GPIO_InitTypeDef GPIOC_InitStruct;
+
 	/*** GPIOC initialization ***/
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
@@ -59,70 +74,67 @@ void GPIOInitialize(void) {
 	GPIOC_InitStruct.GPIO_OType = GPIO_OType_PP;
 	GPIOC_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOC, &GPIOC_InitStruct);
-
-	/*** GPIOD initialization ***/
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE); //Enable clock for GPIOD
-
-	/*** USART2 Tx on PD5 | Rx on PD6 ***/
-	GPIOD_InitStruct.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_6;
-	GPIOD_InitStruct.GPIO_Mode = GPIO_Mode_AF;
-	GPIOD_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIOD_InitStruct.GPIO_OType = GPIO_OType_PP;
-	GPIOD_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-
-	GPIO_Init(GPIOD, &GPIOD_InitStruct);
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_USART2);//Connect PD5 to USART1_Tx
-	GPIO_PinAFConfig(GPIOD, GPIO_PinSource6, GPIO_AF_USART2);//Connect PD6 to USART1_Rx
 }
 
-void UART_Initialize(void) {
-	/* Enable peripheral clock for USART2 */
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+/*
+ * Called by the audio driver when it is time to provide data to
+ * one of the audio buffers (while the other buffer is sent to the
+ * CODEC using DMA). One mp3 frame is decoded at a time and
+ * provided to the audio driver.
+ */
+static void AudioCallback(void *context, int buffer) {
+	static int16_t audio_buffer0[4096];
+	static int16_t audio_buffer1[4096];
 
-	/* USART2 configured as follow:
-	* BaudRate 115200 baud
-	* Word Length 8 Bits
-	* 1 Stop Bit
-	* No parity
-	* Hardware flow control disabled
-	* Receive and transmit enabled
-	*/
-	USART_InitStructure.USART_BaudRate = 115200;
-	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-	USART_InitStructure.USART_StopBits = USART_StopBits_1;
-	USART_InitStructure.USART_Parity = USART_Parity_No;
-	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+	int offset, err;
+	int outOfData = 0;
+	static const char *read_ptr = mp3_data;
+	static int bytes_left = MP3_SIZE;
 
-	USART_Init(USART2, &USART_InitStructure); // USART configuration
-	USART_Cmd(USART2, ENABLE); // Enable USART
-}
+	int16_t *samples;
 
-void DMA_Initialize(void) {
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+	if (buffer) {
+		samples = audio_buffer0;
+		GPIO_SetBits(GPIOD, GPIO_Pin_13);
+		GPIO_ResetBits(GPIOD, GPIO_Pin_14);
+	} else {
+		samples = audio_buffer1;
+		GPIO_SetBits(GPIOD, GPIO_Pin_14);
+		GPIO_ResetBits(GPIOD, GPIO_Pin_13);
+	}
 
-	DMA_DeInit(DMA1_Stream5);
+	offset = MP3FindSyncWord((unsigned char*)read_ptr, bytes_left);
+	bytes_left -= offset;
 
-	DMA_InitStructure.DMA_Channel = DMA_Channel_4;
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory; // Receive
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)receiveBuffer;
-	DMA_InitStructure.DMA_BufferSize = (uint16_t)sizeof(receiveBuffer);
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART2->DR;
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
-	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
-	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
-	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+	if (bytes_left <= 10000) {
+		read_ptr = mp3_data;
+		bytes_left = MP3_SIZE;
+		offset = MP3FindSyncWord((unsigned char*)read_ptr, bytes_left);
+	}
 
-	DMA_Init(DMA1_Stream5, &DMA_InitStructure);
+	read_ptr += offset;
+	err = MP3Decode(hMP3Decoder, (unsigned char**)&read_ptr, &bytes_left, samples, 0);
 
-	/* Enable the USART Rx DMA request */
-	USART_DMACmd(USART2, USART_DMAReq_Rx, ENABLE);
+	if (err) {
+		/* error occurred */
+		switch (err) {
+		case ERR_MP3_INDATA_UNDERFLOW:
+			outOfData = 1;
+			break;
+		case ERR_MP3_MAINDATA_UNDERFLOW:
+			/* do nothing - next call to decode will provide more mainData */
+			break;
+		case ERR_MP3_FREE_BITRATE_SYNC:
+		default:
+			outOfData = 1;
+			break;
+		}
+	} else {
+		/* no error */
+		MP3GetLastFrameInfo(hMP3Decoder, &mp3FrameInfo);
+	}
 
-	/* Enable the DMA RX Stream */
-	DMA_Cmd(DMA1_Stream5, ENABLE);
+	if (!outOfData) {
+		ProvideAudioBuffer(samples, mp3FrameInfo.outputSamps);
+	}
 }
