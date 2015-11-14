@@ -28,6 +28,9 @@ static void putch(char);
 // Read character from ESP866
 static char getch(void);
 
+// Read ipd from data stream
+static void readIpd(char c, circBuf_t *dataBuffer);
+
 // Init methods
 static void GPIOInitialize(void);
 static void UART_Initialize(void);
@@ -188,6 +191,11 @@ bool esp8266_openConnection(const char *address, const char *port) {
     return performCommand(command, NULL);
 }
 
+// Closes connection
+bool esp8266_closeConnection(void) {
+	return performCommand("AT+CIPCLOSE", NULL);
+}
+
 // Send data to connection
 bool esp8266_sendData(const char *data) {
     // Determine amount of data bytes
@@ -207,41 +215,33 @@ bool esp8266_sendData(const char *data) {
     }
 
     // Send data
-    return performCommand(data, NULL);
+    writeLine(data);
+
+    return true;
 }
 
-// Read data send by ESP8266 to maximum of 64 byte
-unsigned char esp8266_readData(char *data) {
-	unsigned char index = 0;
+// Read data send by ESP8266 to buffer
+void esp8266_readData(circBuf_t *dataBuffer) {
 
 	// Wait until data available in buffer
 	while(receiveBufferTail != (RECEIVE_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream5))) {
-		// Reset when at end of buffer
-		if(receiveBufferTail == RECEIVE_BUFFER_SIZE) {
-			receiveBufferTail = 0;
-		}
 
 		// Load char from buffer
 		char c = receiveBuffer[receiveBufferTail];
 
-		// Set char in data
-		*(data + index) = c;
-
-		// Temp print char
-		PrintChar(c);
+		// Try to read IPD
+		readIpd(c, dataBuffer);
 
 		// Increment tail
 		receiveBufferTail++;
 
-		//Stop reading data when 64 bytes have been read
-		index++;
-		if(index == 64) {
-		  break;
+		// Reset when at end of buffer
+		if(receiveBufferTail == RECEIVE_BUFFER_SIZE) {
+			receiveBufferTail = 0;
 		}
 	}
-
-    return index;
 }
+
 //------------- Static Processor Functions -------------//
 
 static void processAccessPointLine(char *line){
@@ -364,3 +364,56 @@ static char getch(void) {
     return c;
 }
 
+// Read ipd from data stream
+static void readIpd(char c, circBuf_t *dataBuffer) {
+	const char *ipdHeader = "+IPD,";
+	static bool readingLength;
+	static bool readingPackage;
+	static unsigned int packageLength;
+	static char packageLengthStr[6];
+	static unsigned int counter = 0;
+
+	if (readingPackage) {
+		// Read package
+
+		// Push char on buffer
+		circBufPush(dataBuffer, c);
+
+		counter++;
+
+		// Check for end of package stream
+		if(counter == packageLength) {
+			readingLength = false;
+			readingPackage = false;
+			packageLength = 0;
+			counter = 0;
+		}
+
+	} else if (readingLength) {
+
+		// Read length of package
+		if(c == ':') {
+			readingLength = false;
+			readingPackage = true;
+			packageLengthStr[counter] = '\0';
+			packageLength = atoi(packageLengthStr);
+			counter = 0;
+		} else {
+			packageLengthStr[counter] = c;
+			counter++;
+		}
+	} else {
+
+		// Check for ipd message
+		if(ipdHeader[counter] == c) {
+			counter++;
+
+			if(strlen(ipdHeader) == counter) {
+				readingLength = true;
+				counter = 0;
+			}
+		} else {
+			counter = 0;
+		}
+	}
+}

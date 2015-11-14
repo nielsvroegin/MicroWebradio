@@ -2,8 +2,11 @@
 #include "esp8266.h"
 #include "Audio.h"
 #include "mp3dec.h"
+#include <string.h>
 
-#define MP3_SIZE	687348
+#define BUTTON		(GPIOA->IDR & GPIO_Pin_0)
+
+CIRCBUF_DEF(mp3Buffer, 51200);
 
 // Private variables
 MP3FrameInfo mp3FrameInfo;
@@ -12,30 +15,26 @@ HMP3Decoder hMP3Decoder;
 // Private function Prototypes
 void GPIOInitialize(void);
 static void AudioCallback(void *context,int buffer);
-
-// External variables
-extern const char mp3_data[];
+void waitForButtonPush(void);
 
 int main(void)
 {
 	// Initialize GPIO
 	GPIOInitialize();
 
+	// Wait for user to push button
+	waitForButtonPush();
+
 	// Initialize ESP8266
 	esp8266_init();
 
-
-	// Play mp3
+	// Init Mp3/Audio
 	hMP3Decoder = MP3InitDecoder();
-	InitializeAudio(Audio44100HzSettings);
+	InitializeAudio(Audio48000HzSettings);
 	SetAudioVolume(0xCF);
-	PlayAudioWithCallback(AudioCallback, 0);
-
-	while(1);
-
 
 	// Delay to be sure Esp8266 is online
-	/*static int i = 0;
+	static int i = 0;
 	for (i = 0; i < 10000000; ++i);
 
 	// Check if ESP8266 is started
@@ -48,22 +47,33 @@ int main(void)
 	esp8266_setMultipleConnectionMode(false);
 
 	// Open connection
-	esp8266_openConnection("startsmart.nl", "80");
+	esp8266_openConnection("icecast.omroep.nl", "80");
 
 	// Perform GET request
-	esp8266_sendData("GET / HTTP/1.1\r\nHost: startsmart.nl\r\n\r\n");
+	esp8266_sendData("GET /3fm-sb-mp3 HTTP/1.1\r\nHost: icecast.omroep.nl\r\n\r\n");
 
-	// Enable led
-	GPIO_ToggleBits(GPIOC, GPIO_Pin_1);
+
+	// Wait for buffer filled
+	while (circBufUsedSpace(&mp3Buffer) < 40000) {
+		esp8266_readData(&mp3Buffer);
+	}
+
+	// Start playing audio
+	PlayAudioWithCallback(AudioCallback, 0);
 
 	while (1) {
-		char data[64];
-		esp8266_readData(data);
-	}*/
+		// Fill buffer with new data
+		while (circBufUsedSpace(&mp3Buffer) < 48000) {
+			esp8266_readData(&mp3Buffer);
+		}
+	}
 }
 
 void GPIOInitialize(void) {
 	GPIO_InitTypeDef GPIOC_InitStruct;
+
+	/*** GPIOA initialization ***/
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 
 	/*** GPIOC initialization ***/
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
@@ -76,6 +86,17 @@ void GPIOInitialize(void) {
 	GPIO_Init(GPIOC, &GPIOC_InitStruct);
 }
 
+void waitForButtonPush(void) {
+	for(;;) {
+		/*
+		 * Check if user button is pressed
+		 */
+		if (BUTTON) {
+			break;
+		}
+	}
+}
+
 /*
  * Called by the audio driver when it is time to provide data to
  * one of the audio buffers (while the other buffer is sent to the
@@ -83,54 +104,80 @@ void GPIOInitialize(void) {
  * provided to the audio driver.
  */
 static void AudioCallback(void *context, int buffer) {
+	#define MP3_DATA_SIZE	4096
+
 	static int16_t audio_buffer0[4096];
 	static int16_t audio_buffer1[4096];
+	static char mp3_data[MP3_DATA_SIZE]; // TODO determine appropriate value
 
 	int offset, err;
 	int outOfData = 0;
 	static const char *read_ptr = mp3_data;
-	static int bytes_left = MP3_SIZE;
+	static int bytes_left = 0;
+
+
+	// Move remaining MP3 data to front of array
+	if (read_ptr != mp3_data) {
+		memmove(mp3_data, read_ptr, bytes_left);
+		read_ptr = mp3_data;
+	}
+
+	// Fill up with data of circbuf
+	while (bytes_left != MP3_DATA_SIZE) {
+		char c;
+
+		if (!circBufPop(&mp3Buffer, &c)) {
+			// No more data in buffer
+			break;
+		}
+
+		// Add char to MP3 data
+		mp3_data[bytes_left] = c;
+
+		bytes_left++;
+	}
+
 
 	int16_t *samples;
 
 	if (buffer) {
 		samples = audio_buffer0;
-		GPIO_SetBits(GPIOD, GPIO_Pin_13);
-		GPIO_ResetBits(GPIOD, GPIO_Pin_14);
+		GPIO_SetBits(GPIOC, GPIO_Pin_1);
 	} else {
 		samples = audio_buffer1;
-		GPIO_SetBits(GPIOD, GPIO_Pin_14);
-		GPIO_ResetBits(GPIOD, GPIO_Pin_13);
+		GPIO_ResetBits(GPIOC, GPIO_Pin_1);
 	}
 
 	offset = MP3FindSyncWord((unsigned char*)read_ptr, bytes_left);
-	bytes_left -= offset;
-
-	if (bytes_left <= 10000) {
-		read_ptr = mp3_data;
-		bytes_left = MP3_SIZE;
-		offset = MP3FindSyncWord((unsigned char*)read_ptr, bytes_left);
+	if(offset == -1) {
+		return;
 	}
 
+	bytes_left -= offset;
 	read_ptr += offset;
 	err = MP3Decode(hMP3Decoder, (unsigned char**)&read_ptr, &bytes_left, samples, 0);
 
 	if (err) {
-		/* error occurred */
-		switch (err) {
+		// error occurred
+		/*switch (err) {
 		case ERR_MP3_INDATA_UNDERFLOW:
 			outOfData = 1;
 			break;
 		case ERR_MP3_MAINDATA_UNDERFLOW:
-			/* do nothing - next call to decode will provide more mainData */
+			AudioCallback(context, buffer);
+			return;
+			// do nothing - next call to decode will provide more mainData
 			break;
 		case ERR_MP3_FREE_BITRATE_SYNC:
 		default:
 			outOfData = 1;
 			break;
-		}
+		}*/
+		AudioCallback(context, buffer);
+		return;
+
 	} else {
-		/* no error */
+		// no error
 		MP3GetLastFrameInfo(hMP3Decoder, &mp3FrameInfo);
 	}
 

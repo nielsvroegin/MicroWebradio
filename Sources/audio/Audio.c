@@ -18,7 +18,7 @@ static volatile bool DMARunning;
 void InitializeAudio(int plln, int pllr, int i2sdiv, int i2sodd) {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 
-	// Intitialize state.
+	// Initialize state.
 	CallbackFunction = NULL;
 	CallbackContext = NULL;
 	NextBufferSamples = NULL;

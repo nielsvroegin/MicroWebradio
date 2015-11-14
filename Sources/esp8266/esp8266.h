@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "circbuf.h"
 
 #define RECEIVE_BUFFER_SIZE 2048
 
@@ -41,10 +42,13 @@ bool esp8266_setMultipleConnectionMode(bool multipleConnectionMode);
 // Opens connect to address on port
 bool esp8266_openConnection(const char *address, const char *port);
 
+// Closes connection
+bool esp8266_closeConnection(void);
+
 // Send data to connection
 bool esp8266_sendData(const char *data);
 
-// Read data send by ESP8266 to maximum of 32 byte
-unsigned char esp8266_readData(char *data);
+// Read data send by ESP8266 to buffer
+void esp8266_readData(circBuf_t *dataBuffer);
 
 
