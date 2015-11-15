@@ -377,7 +377,9 @@ static void readIpd(char c, circBuf_t *dataBuffer) {
 		// Read package
 
 		// Push char on buffer
-		circBufPush(dataBuffer, c);
+		if(!circBufPush(dataBuffer, c)) {
+			printf("No space in MP3 buffer for new byte");
+		}
 
 		counter++;
 

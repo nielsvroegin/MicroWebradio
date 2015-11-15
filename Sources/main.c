@@ -111,9 +111,9 @@ static void AudioCallback(void *context, int buffer) {
 	static char mp3_data[MP3_DATA_SIZE]; // TODO determine appropriate value
 
 	int offset, err;
-	int outOfData = 0;
 	static const char *read_ptr = mp3_data;
 	static int bytes_left = 0;
+	static unsigned char errorAttempts = 0;
 
 
 	// Move remaining MP3 data to front of array
@@ -150,6 +150,7 @@ static void AudioCallback(void *context, int buffer) {
 
 	offset = MP3FindSyncWord((unsigned char*)read_ptr, bytes_left);
 	if(offset == -1) {
+		printf("MP3 sync word not found");
 		return;
 	}
 
@@ -157,31 +158,32 @@ static void AudioCallback(void *context, int buffer) {
 	read_ptr += offset;
 	err = MP3Decode(hMP3Decoder, (unsigned char**)&read_ptr, &bytes_left, samples, 0);
 
+	// Handle error
 	if (err) {
-		// error occurred
-		/*switch (err) {
-		case ERR_MP3_INDATA_UNDERFLOW:
-			outOfData = 1;
-			break;
-		case ERR_MP3_MAINDATA_UNDERFLOW:
+		if(errorAttempts <= 3) {
+			errorAttempts ++;
+
+			// Move forward, to find next time a correct frame
+			if (err == ERR_MP3_INVALID_FRAMEHEADER) {
+				if(bytes_left > 50) {
+					bytes_left -= 50;
+					read_ptr += 50;
+				}
+			}
+
 			AudioCallback(context, buffer);
 			return;
-			// do nothing - next call to decode will provide more mainData
-			break;
-		case ERR_MP3_FREE_BITRATE_SYNC:
-		default:
-			outOfData = 1;
-			break;
-		}*/
-		AudioCallback(context, buffer);
-		return;
+		} else {
+			printf("Error decoding MP3 frame, code: %i", err);
+			return;
+		}
 
-	} else {
-		// no error
-		MP3GetLastFrameInfo(hMP3Decoder, &mp3FrameInfo);
 	}
 
-	if (!outOfData) {
-		ProvideAudioBuffer(samples, mp3FrameInfo.outputSamps);
-	}
+	// Reset error attempts
+	errorAttempts = 0;
+
+	// Get frame info and provide audio buffers
+	MP3GetLastFrameInfo(hMP3Decoder, &mp3FrameInfo);
+	ProvideAudioBuffer(samples, mp3FrameInfo.outputSamps);
 }
