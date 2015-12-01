@@ -2,6 +2,7 @@
 #include "esp8266.h"
 #include "Audio.h"
 #include "mp3dec.h"
+#include "lcd.h"
 #include <string.h>
 
 #define BUTTON		(GPIOA->IDR & GPIO_Pin_0)
@@ -16,11 +17,17 @@ HMP3Decoder hMP3Decoder;
 void GPIOInitialize(void);
 static void AudioCallback(void *context,int buffer);
 void waitForButtonPush(void);
+void LCDInit(void);
 
 int main(void)
 {
 	// Initialize GPIO
 	GPIOInitialize();
+
+	// Initialize LCD
+	LCDInit();
+
+	LCD_Puts("Hello World!");
 
 	// Wait for user to push button
 	waitForButtonPush();
@@ -54,7 +61,7 @@ int main(void)
 
 
 	// Wait for buffer filled
-	while (circBufUsedSpace(&mp3Buffer) < 40000) {
+	while (circBufUsedSpace(&mp3Buffer) < 5000) {
 		esp8266_readData(&mp3Buffer);
 	}
 
@@ -63,10 +70,17 @@ int main(void)
 
 	while (1) {
 		// Fill buffer with new data
-		while (circBufUsedSpace(&mp3Buffer) < 48000) {
-			esp8266_readData(&mp3Buffer);
-		}
+		esp8266_readData(&mp3Buffer);
 	}
+}
+
+void LCDInit(void){
+	LCD_InitTypeDef lcdInit;
+	lcdInit.DataLength = LCD_DataLength_4Bit;
+	lcdInit.LineNumber = LCD_LineNumber_2Lines;
+	lcdInit.CharacterFont = LCD_CharacterFont_5x8Dots;
+
+	LCD_Init(&lcdInit);
 }
 
 void GPIOInitialize(void) {
