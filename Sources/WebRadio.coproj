@@ -78,24 +78,28 @@
     <Component id="500" name="CMSIS BOOT" path="" type="2"/>
     <Component id="501" name="RCC" path="" type="2"/>
     <Component id="504" name="GPIO" path="" type="2"/>
+    <Component id="509" name="SPI" path="" type="2"/>
     <Component id="511" name="DMA" path="" type="2"/>
     <Component id="517" name="USART" path="" type="2"/>
     <Component id="1001" name="HD44780_DRV" path="" type="1"/>
   </Components>
   <Files>
     <File name="cmsis_lib/source/stm32f4xx_gpio.c" path="cmsis_lib/source/stm32f4xx_gpio.c" type="1"/>
-    <File name="cmsis_lib/source/stm32f4xx_dma.c" path="cmsis_lib/source/stm32f4xx_dma.c" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_dma.c" path="cmsis_lib/source/stm32f4xx_dma.c" type="1"/>
+    <File name="externalbuffer" path="" type="2"/>
+    <File name="externalbuffer/externalbuffer.h" path="externalbuffer.h" type="1"/>
     <File name="esp8266/esp8266.h" path="esp8266/esp8266.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
     <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
-    <File name="helix/pub/statname.h" path="helix/pub/statname.h" type="1"/>
     <File name="helix/pub" path="" type="2"/>
+    <File name="helix/pub/statname.h" path="helix/pub/statname.h" type="1"/>
     <File name="semihosting/sh_cmd.s" path="semihosting/sh_cmd.s" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
-    <File name="helix/real/imdct.c" path="helix/real/imdct.c" type="1"/>
     <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
     <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
+    <File name="helix/real/imdct.c" path="helix/real/imdct.c" type="1"/>
+    <File name="cmsis_lib/source/stm32f4xx_spi.c" path="cmsis_lib/source/stm32f4xx_spi.c" type="1"/>
     <File name="cmsis/core_cmFunc.h" path="cmsis/core_cmFunc.h" type="1"/>
     <File name="cmsis/core_cm4.h" path="cmsis/core_cm4.h" type="1"/>
     <File name="semihosting/semihosting.c" path="semihosting/semihosting.c" type="1"/>
@@ -106,6 +110,7 @@
     <File name="lcd" path="" type="2"/>
     <File name="circbuf/circbuf.h" path="circbuf/circbuf.h" type="1"/>
     <File name="esp8266" path="" type="2"/>
+    <File name="externalbuffer/externalbuffer.c" path="externalbuffer.c" type="1"/>
     <File name="cmsis_boot/stm32f4xx_conf.h" path="cmsis_boot/stm32f4xx_conf.h" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.h" path="cmsis_boot/system_stm32f4xx.h" type="1"/>
     <File name="helix/pub/mpadecobjfixpt.h" path="helix/pub/mpadecobjfixpt.h" type="1"/>
@@ -117,32 +122,33 @@
     <File name="helix" path="" type="2"/>
     <File name="audio/Audio.h" path="audio/Audio.h" type="1"/>
     <File name="circbuf/circbuf.c" path="circbuf/circbuf.c" type="1"/>
-    <File name="stdio" path="" type="2"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
+    <File name="stdio" path="" type="2"/>
     <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
-    <File name="helix/mp3tabs.c" path="helix/mp3tabs.c" type="1"/>
     <File name="helix/real/assembly.h" path="helix/real/assembly.h" type="1"/>
+    <File name="helix/mp3tabs.c" path="helix/mp3tabs.c" type="1"/>
     <File name="semihosting" path="" type="2"/>
     <File name="helix/mp3dec.c" path="helix/mp3dec.c" type="1"/>
-    <File name="helix/real/subband.c" path="helix/real/subband.c" type="1"/>
     <File name="cmsis_boot/system_stm32f4xx.c" path="cmsis_boot/system_stm32f4xx.c" type="1"/>
+    <File name="helix/real/subband.c" path="helix/real/subband.c" type="1"/>
     <File name="audio" path="" type="2"/>
     <File name="helix/real/trigtabs_fixpt.c" path="helix/real/trigtabs_fixpt.c" type="1"/>
     <File name="helix/real/polyphase.c" path="helix/real/polyphase.c" type="1"/>
+    <File name="cmsis_lib/include/stm32f4xx_spi.h" path="cmsis_lib/include/stm32f4xx_spi.h" type="1"/>
     <File name="lcd/lcd.h" path="lcd/lcd.h" type="1"/>
     <File name="helix/real/dequant.c" path="helix/real/dequant.c" type="1"/>
     <File name="cmsis" path="" type="2"/>
-    <File name="helix/platform.h" path="helix/platform.h" type="1"/>
     <File name="cmsis_lib" path="" type="2"/>
+    <File name="helix/platform.h" path="helix/platform.h" type="1"/>
     <File name="helix/real/dqchan.c" path="helix/real/dqchan.c" type="1"/>
     <File name="esp8266/esp8266.c" path="esp8266/esp8266.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_dma.h" path="cmsis_lib/include/stm32f4xx_dma.h" type="1"/>
     <File name="helix/real/hufftabs.c" path="helix/real/hufftabs.c" type="1"/>
-    <File name="audio/Audio.c" path="audio/Audio.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
-    <File name="helix/real/buffers.c" path="helix/real/buffers.c" type="1"/>
+    <File name="audio/Audio.c" path="audio/Audio.c" type="1"/>
     <File name="helix/real/scalfact.c" path="helix/real/scalfact.c" type="1"/>
+    <File name="helix/real/buffers.c" path="helix/real/buffers.c" type="1"/>
     <File name="syscalls" path="" type="2"/>
     <File name="helix/real/huffman.c" path="helix/real/huffman.c" type="1"/>
     <File name="cmsis_lib/include" path="" type="2"/>

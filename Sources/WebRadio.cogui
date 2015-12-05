@@ -15,95 +15,29 @@
 <part id="2"/>
 <part id="3"/>
 <part id="4"/>
-<part id="5"/>
-<part id="6"/>
-<part id="7"/>
-<part id="8"/>
-<part id="9"/>
-<part id="10"/>
-<part id="11"/>
-<part id="12"/>
-<part id="13"/>
-<part id="14"/>
-<part id="15"/>
-<part id="16"/>
-<part id="17"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/proj/MicroWebRadio/Sources/main.c" title="main.c" tooltip="C:/proj/MicroWebRadio/Sources/main.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="498" selectionTopPixel="180"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="esp8266.c" partName="esp8266.c" path="C:/proj/MicroWebRadio/Sources/esp8266/esp8266.c" title="esp8266.c" tooltip="C:/proj/MicroWebRadio/Sources/esp8266/esp8266.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/esp8266/esp8266.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="39" selectionTopPixel="60"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="Audio.c" partName="Audio.c" path="C:/proj/MicroWebRadio/Sources/audio/Audio.c" title="Audio.c" tooltip="C:/proj/MicroWebRadio/Sources/audio/Audio.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/audio/Audio.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="14" selectionOffset="5100" selectionTopPixel="2205"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="mp3dec.c" partName="mp3dec.c" path="C:/proj/MicroWebRadio/Sources/helix/mp3dec.c" title="mp3dec.c" tooltip="C:/proj/MicroWebRadio/Sources/helix/mp3dec.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/helix/mp3dec.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="9" selectionOffset="10761" selectionTopPixel="4005"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="mp3dec.h" partName="mp3dec.h" path="C:/proj/MicroWebRadio/Sources/helix/pub/mp3dec.h" title="mp3dec.h" tooltip="C:/proj/MicroWebRadio/Sources/helix/pub/mp3dec.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/helix/pub/mp3dec.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="9" selectionOffset="3013" selectionTopPixel="945"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="circbuf.c" partName="circbuf.c" path="C:/proj/MicroWebRadio/Sources/circbuf/circbuf.c" title="circbuf.c" tooltip="C:/proj/MicroWebRadio/Sources/circbuf/circbuf.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/circbuf/circbuf.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="101"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" partName="startup_stm32f4xx.c" path="C:/proj/MicroWebRadio/Sources/cmsis_boot/startup/startup_stm32f4xx.c" title="startup_stm32f4xx.c" tooltip="C:/proj/MicroWebRadio/Sources/cmsis_boot/startup/startup_stm32f4xx.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/cmsis_boot/startup/startup_stm32f4xx.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="14793" selectionTopPixel="3810"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="circbuf.h" partName="circbuf.h" path="C:/proj/MicroWebRadio/Sources/circbuf/circbuf.h" title="circbuf.h" tooltip="C:/proj/MicroWebRadio/Sources/circbuf/circbuf.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/circbuf/circbuf.h"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="externalbuffer.h" partName="externalbuffer.h" path="C:/proj/MicroWebRadio/Sources/externalbuffer.h" title="externalbuffer.h" tooltip="C:/proj/MicroWebRadio/Sources/externalbuffer.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/externalbuffer/externalbuffer.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="esp8266.h" partName="esp8266.h" path="C:/proj/MicroWebRadio/Sources/esp8266/esp8266.h" title="esp8266.h" tooltip="C:/proj/MicroWebRadio/Sources/esp8266/esp8266.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/esp8266/esp8266.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="19" selectionOffset="54" selectionTopPixel="236"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_spi.h" partName="stm32f4xx_spi.h" path="C:/proj/MicroWebRadio/Sources/cmsis_lib/include/stm32f4xx_spi.h" title="stm32f4xx_spi.h" tooltip="C:/proj/MicroWebRadio/Sources/cmsis_lib/include/stm32f4xx_spi.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/cmsis_lib/include/stm32f4xx_spi.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="23" selectionOffset="8351" selectionTopPixel="2940"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="buffers.c" partName="buffers.c" path="C:/proj/MicroWebRadio/Sources/helix/real/buffers.c" title="buffers.c" tooltip="C:/proj/MicroWebRadio/Sources/helix/real/buffers.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/helix/real/buffers.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4015" selectionTopPixel="1470"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/proj/MicroWebRadio/Sources/main.c" title="main.c" tooltip="C:/proj/MicroWebRadio/Sources/main.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/main.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="527" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="mp3common.h" partName="mp3common.h" path="C:/proj/MicroWebRadio/Sources/helix/pub/mp3common.h" title="mp3common.h" tooltip="C:/proj/MicroWebRadio/Sources/helix/pub/mp3common.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/helix/pub/mp3common.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3217" selectionTopPixel="71"/>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="externalbuffer.c" partName="externalbuffer.c" path="C:/proj/MicroWebRadio/Sources/externalbuffer.c" title="externalbuffer.c" tooltip="C:/proj/MicroWebRadio/Sources/externalbuffer.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/externalbuffer/externalbuffer.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2839" selectionTopPixel="1001"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="coder.h" partName="coder.h" path="C:/proj/MicroWebRadio/Sources/helix/real/coder.h" title="coder.h" tooltip="C:/proj/MicroWebRadio/Sources/helix/real/coder.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/helix/real/coder.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7688" selectionTopPixel="4016"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_dma.h" partName="stm32f4xx_dma.h" path="C:/proj/MicroWebRadio/Sources/cmsis_lib/include/stm32f4xx_dma.h" title="stm32f4xx_dma.h" tooltip="C:/proj/MicroWebRadio/Sources/cmsis_lib/include/stm32f4xx_dma.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/cmsis_lib/include/stm32f4xx_dma.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="1200"/>
-</editor>
-<editor id="org.coocox.builder.ui.editors.repository.RepositoryBrowser" name="Repository" partName="Repository" title="Repository" tooltip="Repository" workbook="DefaultEditorWorkbook">
-<input factoryID="org.coocox.component.ui.editors.repository.RepositoryElementFactory">
-<subPage horizontalPosition="0" selectedItemId="1001" subPageIndex="3" verticalPosition="21"/>
-</input>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="lcd.h" partName="lcd.h" path="C:/proj/MicroWebRadio/Sources/lcd/lcd.h" title="lcd.h" tooltip="C:/proj/MicroWebRadio/Sources/lcd/lcd.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/lcd/lcd.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="25" selectionOffset="3128" selectionTopPixel="210"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="lcd.c" partName="lcd.c" path="C:/proj/MicroWebRadio/Sources/lcd/lcd.c" title="lcd.c" tooltip="C:/proj/MicroWebRadio/Sources/lcd/lcd.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/lcd/lcd.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="8" selectionOffset="459" selectionTopPixel="75"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.c" partName="system_stm32f4xx.c" path="C:/proj/MicroWebRadio/Sources/cmsis_boot/system_stm32f4xx.c" title="system_stm32f4xx.c" tooltip="C:/proj/MicroWebRadio/Sources/cmsis_boot/system_stm32f4xx.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/cmsis_boot/system_stm32f4xx.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="15" selectionOffset="8314" selectionTopPixel="2535"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.c" partName="stm32f4xx_rcc.c" path="C:/proj/MicroWebRadio/Sources/cmsis_lib/source/stm32f4xx_rcc.c" title="stm32f4xx_rcc.c" tooltip="C:/proj/MicroWebRadio/Sources/cmsis_lib/source/stm32f4xx_rcc.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/cmsis_lib/source/stm32f4xx_rcc.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="22" selectionOffset="46951" selectionTopPixel="16080"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/proj/MicroWebRadio/Sources/main.c" title="main.c" tooltip="C:/proj/MicroWebRadio/Sources/main.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/WebRadio/main.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="527" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -116,12 +50,20 @@
 <viewState/>
 </view>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
-<viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="0">
+<viewState CommonNavigator.LINKING_ENABLED="0" horizontalPosition="0" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0" verticalPosition="7">
 <expanded>
 <element path="/WebRadio"/>
+<element path="/WebRadio/audio"/>
+<element path="/WebRadio/circbuf"/>
+<element path="/WebRadio/cmsis_boot"/>
+<element path="/WebRadio/cmsis_lib"/>
+<element path="/WebRadio/cmsis_lib/include"/>
+<element path="/WebRadio/cmsis_lib/source"/>
+<element path="/WebRadio/esp8266"/>
+<element path="/WebRadio/externalbuffer"/>
 </expanded>
 <selection>
-<element path="/WebRadio/main.c"/>
+<element path="/WebRadio/externalbuffer/externalbuffer.c"/>
 </selection>
 </viewState>
 </view>
@@ -215,7 +157,7 @@
 </info>
 <info part="org.coocox.builder.ui.exampleView" ratio="0.2194976" ratioLeft="367" ratioRight="1305" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1e718a0"/>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@1de5b04" ratio="0.71954024" ratioLeft="939" ratioRight="366" relationship="2" relative="org.coocox.builder.ui.exampleView">
-<folder activePageID="org.coocox.component.ui.Help" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.search.ui.views.SearchView" appearance="2" expanded="2">
 <page content="org.coocox.component.ui.Help" label="Help"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
@@ -283,8 +225,8 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.coocox.builder.ui.build"/>
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
-<hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
+<hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.debug.ui.DebugView"/>
 <view id="org.coocox.codebugger.trace.ui.traceview"/>
@@ -359,167 +301,173 @@
 <workingSets/>
 <navigationHistory>
 <editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/externalbuffer/externalbuffer.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_lib/source/stm32f4xx_spi.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/main.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_boot/startup/startup_stm32f4xx.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/externalbuffer/externalbuffer.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_lib/include/stm32f4xx_rcc.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_lib/include/stm32f4xx_gpio.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/audio/Audio.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/audio/Audio.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/externalbuffer/externalbuffer.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_lib/include/stm32f4xx_spi.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_boot/startup/startup_stm32f4xx.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/esp8266/esp8266.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/esp8266/esp8266.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/helix/pub/mp3dec.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/helix/real/buffers.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/helix/real/coder.h"/>
-<editor factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.builder.ui.editors.ConfigEditor">
-<org.coocox.builder.ui.editors.ConfigEditor/>
-</editor>
-<editor factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.builder.ui.editors.ConfigEditor">
-<org.coocox.builder.ui.editors.ConfigEditor/>
-</editor>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/main.c"/>
-<editor factoryID="org.coocox.component.ui.editors.repository.RepositoryElementFactory" id="org.coocox.builder.ui.editors.repository.RepositoryBrowser">
-<subPage horizontalPosition="0" selectedItemId="1001" subPageIndex="3" verticalPosition="21"/>
-</editor>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_lib/include/lcd_cortex_m4.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_lib/source/lcd_cortex_m4.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/lcd/lcd.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/lcd/lcd.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/externalbuffer/externalbuffer.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/externalbuffer/externalbuffer.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/cmsis_boot/startup/startup_stm32f4xx.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/WebRadio/main.c"/>
 </editors>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="4002" y="0"/>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="623" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="1">
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2190" y="14"/>
+</item>
+<item historyLabel="externalbuffer.h" index="4">
+<position info="not_deleted" x="54" y="29"/>
+</item>
+<item historyLabel="externalbuffer.h" index="4">
+<position info="not_deleted" x="120" y="14"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="623" y="0"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="647" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2190" y="14"/>
+</item>
+<item historyLabel="startup_stm32f4xx.c" index="3">
 <position info="not_deleted" x="14793" y="0"/>
 </item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="459" y="0"/>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="527" y="0"/>
 </item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1221" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2700" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="1">
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2542" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2825" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_spi.c" index="1">
+<position info="not_deleted" x="32308" y="16"/>
+</item>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="642" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2098" y="0"/>
+</item>
+<item historyLabel="startup_stm32f4xx.c" index="3">
 <position info="not_deleted" x="14793" y="0"/>
 </item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="459" y="0"/>
+<item historyLabel="main.c" index="2">
+<position info="not_deleted" x="527" y="0"/>
 </item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1221" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2700" y="0"/>
 </item>
-<item historyLabel="startup_stm32f4xx.c" index="2">
-<position info="not_deleted" x="14793" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="1418" y="0"/>
 </item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1261" y="0"/>
-</item>
-<item historyLabel="startup_stm32f4xx.c" index="2">
-<position info="not_deleted" x="14793" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="esp8266.c" index="3">
-<position info="not_deleted" x="10311" y="0"/>
-</item>
-<item historyLabel="startup_stm32f4xx.c" index="2">
-<position info="not_deleted" x="14793" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1426" y="0"/>
-</item>
-<item historyLabel="esp8266.c" index="3">
-<position info="not_deleted" x="1011" y="0"/>
-</item>
-<item historyLabel="esp8266.h" index="4">
-<position info="not_deleted" x="54" y="19"/>
-</item>
-<item historyLabel="mp3dec.h" index="5">
-<position info="not_deleted" x="3498" y="27"/>
-</item>
-<item historyLabel="buffers.c" index="6">
-<position info="not_deleted" x="4015" y="0"/>
-</item>
-<item historyLabel="coder.h" index="7">
-<position info="not_deleted" x="7688" y="0"/>
-</item>
-<item historyLabel="esp8266.c" index="3">
-<position info="not_deleted" x="39" y="0"/>
-</item>
-<item historyLabel="mp3dec.h" index="5">
-<position info="not_deleted" x="3013" y="9"/>
-</item>
-<item historyLabel="esp8266.c" index="3">
-<position info="not_deleted" x="39" y="0"/>
-</item>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="1426" y="0"/>
-</item>
-<item historyLabel="Configuration" index="8"/>
-<item historyLabel="Configuration" index="9"/>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="206" y="0"/>
-</item>
-<item historyLabel="Repository" index="11"/>
-<item historyLabel="lcd_cortex_m4.h" index="12">
-<position info="not_deleted" x="1302" y="0"/>
-</item>
-<item historyLabel="lcd_cortex_m4.c" index="13">
+<item historyLabel="stm32f4xx_rcc.h" index="5">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="Repository" index="11"/>
-<item historyLabel="lcd.h" index="14">
-<position info="not_deleted" x="2909" y="0"/>
+<item historyLabel="stm32f4xx_gpio.h" index="6">
+<position info="not_deleted" x="3856" y="9"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="1909" y="0"/>
+<item historyLabel="Audio.h" index="7">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="lcd.h" index="14">
-<position info="not_deleted" x="733" y="20"/>
+<item historyLabel="Audio.c" index="8">
+<position info="not_deleted" x="35" y="0"/>
 </item>
-<item historyLabel="lcd.c" index="15">
-<position info="not_deleted" x="3804" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="1418" y="0"/>
 </item>
-<item historyLabel="lcd.h" index="14">
-<position info="not_deleted" x="986" y="20"/>
+<item historyLabel="Audio.c" index="8">
+<position info="not_deleted" x="35" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="1905" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="862" y="16"/>
 </item>
-<item historyLabel="lcd.h" index="14">
-<position info="not_deleted" x="886" y="0"/>
+<item historyLabel="Audio.c" index="8">
+<position info="not_deleted" x="35" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="1905" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="862" y="16"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="107" y="0"/>
+<item historyLabel="externalbuffer.h" index="9">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="516" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="1587" y="0"/>
+<item historyLabel="stm32f4xx_spi.h" index="10">
+<position info="not_deleted" x="8591" y="25"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="1604" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2051" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="578" y="0"/>
+<item historyLabel="startup_stm32f4xx.c" index="11">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="581" y="0"/>
+<item historyLabel="main.c" index="12">
+<position info="not_deleted" x="527" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="578" y="0"/>
+<item historyLabel="externalbuffer.c" index="0">
+<position info="not_deleted" x="2110" y="0"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="1774" y="0"/>
+<item historyLabel="stm32f4xx_spi.h" index="10">
+<position info="not_deleted" x="7369" y="13"/>
 </item>
-<item historyLabel="main.c" index="10">
-<position info="not_deleted" x="498" y="0"/>
+<item historyLabel="externalbuffer.h" index="13">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="lcd.h" index="14">
-<position info="not_deleted" x="3128" y="25"/>
+<item historyLabel="stm32f4xx_spi.h" index="10">
+<position info="not_deleted" x="7369" y="13"/>
+</item>
+<item historyLabel="externalbuffer.h" index="13">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="14">
+<position info="not_deleted" x="1869" y="0"/>
+</item>
+<item historyLabel="startup_stm32f4xx.c" index="15">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.c" index="16">
+<position info="not_deleted" x="527" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="14">
+<position info="not_deleted" x="1919" y="0"/>
+</item>
+<item historyLabel="stm32f4xx_spi.h" index="10">
+<position info="not_deleted" x="8351" y="23"/>
+</item>
+<item historyLabel="externalbuffer.c" index="14">
+<position info="not_deleted" x="1919" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="14">
+<position info="not_deleted" x="2048" y="0"/>
+</item>
+<item historyLabel="externalbuffer.c" index="14">
+<position info="not_deleted" x="2688" y="0"/>
+</item>
+<item historyLabel="startup_stm32f4xx.c" index="15">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="main.c" index="16">
+<position info="not_deleted" x="527" y="0"/>
+</item>
+<item active="true" historyLabel="externalbuffer.c" index="14">
+<position info="not_deleted" x="2839" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -528,11 +476,26 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.c" tooltip="WebRadio/cmsis_lib/source/stm32f4xx_rcc.c">
-<persistable path="/WebRadio/cmsis_lib/source/stm32f4xx_rcc.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="WebRadio/cmsis_boot/startup/startup_stm32f4xx.c">
+<persistable path="/WebRadio/cmsis_boot/startup/startup_stm32f4xx.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="system_stm32f4xx.c" tooltip="WebRadio/cmsis_boot/system_stm32f4xx.c">
-<persistable path="/WebRadio/cmsis_boot/system_stm32f4xx.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="externalbuffer.c" tooltip="WebRadio/externalbuffer/externalbuffer.c">
+<persistable path="/WebRadio/externalbuffer/externalbuffer.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="WebRadio/main.c">
+<persistable path="/WebRadio/main.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_spi.h" tooltip="WebRadio/cmsis_lib/include/stm32f4xx_spi.h">
+<persistable path="/WebRadio/cmsis_lib/include/stm32f4xx_spi.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="externalbuffer.h" tooltip="WebRadio/externalbuffer/externalbuffer.h">
+<persistable path="/WebRadio/externalbuffer/externalbuffer.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Audio.h" tooltip="WebRadio/audio/Audio.h">
+<persistable path="/WebRadio/audio/Audio.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_rcc.h" tooltip="WebRadio/cmsis_lib/include/stm32f4xx_rcc.h">
+<persistable path="/WebRadio/cmsis_lib/include/stm32f4xx_rcc.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="lcd.c" tooltip="WebRadio/lcd/lcd.c">
 <persistable path="/WebRadio/lcd/lcd.c"/>
@@ -540,37 +503,23 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="lcd.h" tooltip="WebRadio/lcd/lcd.h">
 <persistable path="/WebRadio/lcd/lcd.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="lcd_cortex_m4.c" tooltip="WebRadio/cmsis_lib/source/lcd_cortex_m4.c">
-<persistable path="/WebRadio/cmsis_lib/source/lcd_cortex_m4.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx.h" tooltip="WebRadio/cmsis_boot/stm32f4xx.h">
+<persistable path="/WebRadio/cmsis_boot/stm32f4xx.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="lcd_cortex_m4.h" tooltip="WebRadio/cmsis_lib/include/lcd_cortex_m4.h">
-<persistable path="/WebRadio/cmsis_lib/include/lcd_cortex_m4.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.c" tooltip="WebRadio/cmsis_lib/source/stm32f4xx_gpio.c">
+<persistable path="/WebRadio/cmsis_lib/source/stm32f4xx_gpio.c"/>
 </file>
-<file factoryID="org.coocox.component.ui.editors.repository.RepositoryElementFactory" id="org.coocox.builder.ui.editors.repository.RepositoryBrowser" name="Repository" tooltip="Repository">
-<persistable>
-<subPage horizontalPosition="0" selectedItemId="1001" subPageIndex="3" verticalPosition="21"/>
-</persistable>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.h" tooltip="WebRadio/cmsis_lib/include/stm32f4xx_gpio.h">
+<persistable path="/WebRadio/cmsis_lib/include/stm32f4xx_gpio.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_dma.h" tooltip="WebRadio/cmsis_lib/include/stm32f4xx_dma.h">
-<persistable path="/WebRadio/cmsis_lib/include/stm32f4xx_dma.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Audio.c" tooltip="WebRadio/audio/Audio.c">
+<persistable path="/WebRadio/audio/Audio.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="coder.h" tooltip="WebRadio/helix/real/coder.h">
-<persistable path="/WebRadio/helix/real/coder.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="mp3common.h" tooltip="WebRadio/helix/pub/mp3common.h">
-<persistable path="/WebRadio/helix/pub/mp3common.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="buffers.c" tooltip="WebRadio/helix/real/buffers.c">
-<persistable path="/WebRadio/helix/real/buffers.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_conf.h" tooltip="WebRadio/cmsis_boot/stm32f4xx_conf.h">
+<persistable path="/WebRadio/cmsis_boot/stm32f4xx_conf.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="esp8266.h" tooltip="WebRadio/esp8266/esp8266.h">
 <persistable path="/WebRadio/esp8266/esp8266.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="circbuf.h" tooltip="WebRadio/circbuf/circbuf.h">
-<persistable path="/WebRadio/circbuf/circbuf.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="startup_stm32f4xx.c" tooltip="WebRadio/cmsis_boot/startup/startup_stm32f4xx.c">
-<persistable path="/WebRadio/cmsis_boot/startup/startup_stm32f4xx.c"/>
 </file>
 </mruList>
 </workbench>

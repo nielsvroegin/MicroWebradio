@@ -3,6 +3,7 @@
 #include "Audio.h"
 #include "mp3dec.h"
 #include "lcd.h"
+#include "externalbuffer.h"
 #include <string.h>
 
 #define BUTTON		(GPIOA->IDR & GPIO_Pin_0)
@@ -26,6 +27,11 @@ int main(void)
 
 	// Initialize LCD
 	LCDInit();
+
+	// Initialize external buffer
+	extbuffer_init();
+
+	extbuffer_test();
 
 	LCD_Puts("Hello World!");
 
